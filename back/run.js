@@ -1,5 +1,7 @@
 console.log('hello')
 
+require('./staticServer')
+
 var io = require('socket.io')(1984)
 
 io.on('connection', function(socket){
