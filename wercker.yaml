@@ -1,0 +1,20 @@
+box: node
+
+build:
+
+    steps:
+
+        - npm-install
+
+        - script:
+            name: build front
+            code: npm run build-front
+
+
+deploy:
+  steps:
+        uetchy/gh-pages:
+        token: $GITHUB_TOKEN
+        repo: randompaper/randompaper.github.io
+        path: public
+        domain: randompaper.co
