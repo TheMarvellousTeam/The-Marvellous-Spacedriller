@@ -35,8 +35,8 @@
     "scripts": {
         "build-back": "babel --presets es2015,stage-2 --out-dir ./dist/back ./back",
 
-        "dev-front": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js --port 8082 --content-base --config ./front/webpack.config.js . -d",
-        "dev-back": "node node_modules/webpack/bin/webpack.js --config ./back/webpack.config.js -d -w . "
+        "dev-front": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js --port 8082 --content-base --config ./front/webpack.config.js -d",
+        "dev-back": "node node_modules/webpack/bin/webpack.js --config ./back/webpack.config.js -d -w "
     }
 
 }
