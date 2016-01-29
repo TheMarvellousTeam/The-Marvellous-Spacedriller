@@ -4,23 +4,11 @@ var webpack = require('webpack')
 var productionEnv = process.argv.indexOf('--production') > -1 || process.env.PRODUCTION ||  process.env.NODE_ENV == 'production'
 var testEnv = process.argv.indexOf('--test') > -1 || process.env.TEST
 
-var plugins = [
-
-    // replace keys
-    new webpack.DefinePlugin({
-        __PROD__: productionEnv,
-        __VERSION__: JSON.stringify( require( './package.json' ).version ),
-
-    }),
-
-]
-
-
 module.exports = {
 
-    entry: [
-        'app' : './src/app.js'
-    ],
+    entry: {
+        'app' : './front/src/app.js'
+    },
 
     output: {
         path: path.join(__dirname, '.tmp'),
