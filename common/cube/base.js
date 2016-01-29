@@ -20,4 +20,8 @@ export class Cube {
         this._cube[ x * this._l*this._l + y * this._l + z  ] = cell
         return this
     }
+
+    getL(){
+        return this._l
+    }
 }

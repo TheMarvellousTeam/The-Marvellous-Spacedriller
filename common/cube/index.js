@@ -1,3 +1,3 @@
-import { Base as _Base } from './generate'
+import { Cube as _Cube } from './generate'
 
-export const Base = _Base
+export const Cube = _Cube

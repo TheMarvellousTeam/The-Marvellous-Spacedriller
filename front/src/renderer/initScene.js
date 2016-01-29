@@ -1,6 +1,7 @@
 import THREE, {Vector3} from 'three'
-import {Stat} from 'stats.js'
 const OrbitControls = require('three-orbit-controls')(THREE)
+import {default as Stats} from 'stats.js'
+
 
 const material = new THREE.MeshPhongMaterial( {
     color: 0xD009D9,
@@ -9,8 +10,15 @@ const material = new THREE.MeshPhongMaterial( {
 })
 
 export const initScene = () => {
+
+    const stats = new Stats()
+    stats.domElement.style.position = 'absolute'
+    stats.domElement.style.right = '0px'
+    stats.domElement.style.bottom = '0px'
+    document.body.appendChild( stats.domElement )
+
     let camera = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 0.01, 2000 )
-	camera.position.set(1, 1 , 3)
+	camera.position.set(5, 5 , 30)
     camera.lookAt( new Vector3(0,0,0) )
     camera.updateProjectionMatrix ()
 
@@ -18,7 +26,7 @@ export const initScene = () => {
 	let scene = new THREE.Scene()
 
     // gizmo
-    let geometry = new THREE.BoxGeometry( 1, 1, 1 )
+    let geometry = new THREE.BoxGeometry( 0.1, 0.1, 0.1 )
     let gizmo = new THREE.Mesh( geometry, material )
     gizmo.name='gizmo'
     scene.add( gizmo )
@@ -54,8 +62,16 @@ export const initScene = () => {
 
 
     let controls = new OrbitControls( camera , renderer.domElement )
-    controls.addEventListener( 'change', () =>
-        renderer.render( scene, camera )  )
+    controls.addEventListener( 'change', () => 0 )
+
+    const loop = () => {
+        stats.begin()
+        renderer.render( scene, camera )
+        stats.end()
+
+        requestAnimationFrame( loop )
+    }
+    loop()
 
     renderer.render(scene, camera)
 
