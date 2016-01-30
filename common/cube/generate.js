@@ -15,7 +15,7 @@ export class Cube extends Parent {
 
                 let depth = this.getCellDepth( x,y,z )
 
-                depth = depth + (0|( Math.random() * 1.5 )) * ( Math.random() > 0.5 ? 1 : -1 )
+                depth = depth + (0|( Math.random() * 1.5 ))
                 depth = Math.min( l/2-1, depth )
                 depth = Math.max( 0, depth )
 

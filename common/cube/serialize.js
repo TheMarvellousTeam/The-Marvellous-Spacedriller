@@ -9,5 +9,7 @@ export class Cube extends Parent {
     hydrate( c ){
         this._l = Math.round( Math.pow( c.length, 1/3 ) )
         this._cube = c.split()
+
+        return this
     }
 }
