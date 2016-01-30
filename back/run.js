@@ -5,7 +5,7 @@ import {StateMachine} from './src/state'
 
 var io = require('socket.io')(1984)
 
-const MIN_PLAYER = 2
+const MIN_PLAYER = 1
 
 var cube = (new Cube()).generate( 10 )
 var gameState = new StateMachine()
@@ -45,7 +45,7 @@ io.on('connection', function(socket){
         user_socket.splice(i, 1)
         var nick = user_nick.splice(i, 1)
 
-        user_socket.forEach( s => s.emit('player_quit', {name: nick}) )
+        user_socket.forEach(s => s.emit('players_update', {players: user_nick}))
 
         console.log(nick + ' disconnected')
     })
@@ -55,19 +55,16 @@ io.on('connection', function(socket){
         user_socket.splice(i, 1)
         var nick = user_nick.splice(i, 1)
 
-        user_socket.forEach( s => s.emit('player_quit', {name: nick}) )
+        user_socket.forEach(s => s.emit('players_update', {players: user_nick}))
 
         console.log(nick + ' crashed')
     })
 
     socket.on('ready', function(data) {
-        for(var i = user_socket.length; i--;) {
-            user_socket[i].emit('new_player', {name: data.name})
-            socket.emit('new_player', {name: user_nick[i]})
-        }
-
         user_socket.push(socket)
         user_nick.push(data.name)
+
+        user_socket.forEach(s => s.emit('players_update', {players: user_nick}))
 
         console.log(data.name + ' is ready')
 
