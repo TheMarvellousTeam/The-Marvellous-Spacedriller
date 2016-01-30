@@ -6,8 +6,11 @@ export const proj = ( camera, x, y ) => {
 
     U.unproject( camera )
 
+    const v = U.sub( camera.position )
+    v.normalize()
+
     return {
         origin  : camera.position.clone(),
-        v       : U.sub( camera.position ).normalize()
+        v       : v
     }
 }

@@ -27,7 +27,7 @@ export class CubeRenderer {
 
     render( ) {
 
-        const geometry = new THREE.BoxGeometry( 0.95, 0.95, 0.95 )
+        const geometry = new THREE.BoxGeometry( 0.8, 0.8, 0.8 )
 
         const l = this._cube.getL()
 

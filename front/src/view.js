@@ -1,6 +1,7 @@
 import {initScene} from './renderer/initScene'
 import {CubeRenderer} from './renderer/cube'
 import {arrow} from './renderer/arrow'
+import {cube as cube_mat} from './renderer/mat'
 import {proj} from './renderer/utils/proj'
 import THREE,{Vector3} from 'three'
 
@@ -21,11 +22,20 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
 
         const {v, origin} = proj( camera, x, y )
 
-        const O = origin.clone().add( v.setLength( 20 ) )
+        const O = origin.clone().add( v.clone().setLength( 20 ) )
 
         scene.add( arrow( origin, O ) )
 
-        console.log( 'place' )
+
+
+        const {t,cell} = cube.rayCast( origin, v )
+
+        const geometry = new THREE.BoxGeometry( 1, 1, 1 )
+        const l = cube.getL()
+        const c = new THREE.Mesh( geometry, cube_mat(  ) )
+        c.position.set(cell.x-l/2+0.5, cell.y-l/2+0.5, cell.z-l/2+0.5)
+        scene.add( c )
+
 
         document.body.removeEventListener('mousedown', placeArrow )
     }

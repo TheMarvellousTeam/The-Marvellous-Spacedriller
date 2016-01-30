@@ -1,3 +1,3 @@
-import { Cube as _Cube } from './generate'
+import { Cube as _Cube } from './explosion'
 
 export const Cube = _Cube
