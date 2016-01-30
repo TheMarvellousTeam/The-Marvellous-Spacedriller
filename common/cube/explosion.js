@@ -67,4 +67,19 @@ export class Cube extends Parent {
         }
     }
 
+    explosion( o, v ){
+
+        const res = this.rayCast( o, v )
+
+        if ( !res )
+            return
+
+        const cell = this.getCell( res.cell.x, res.cell.y, res.cell.z )
+
+        if ( cell )
+            this.setCell( res.cell.x, res.cell.y, res.cell.z, null )
+
+        return res
+    }
+
 }

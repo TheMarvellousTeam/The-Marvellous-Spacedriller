@@ -28,14 +28,15 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
 
 
 
-        const {t,cell} = cube.rayCast( origin, v )
+        const {t,cell} = cube.explosion( origin, v )
 
-        const geometry = new THREE.BoxGeometry( 1, 1, 1 )
+        const geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 )
         const l = cube.getL()
         const c = new THREE.Mesh( geometry, cube_mat(  ) )
         c.position.set(cell.x-l/2+0.5, cell.y-l/2+0.5, cell.z-l/2+0.5)
         scene.add( c )
 
+        cubeRenderer.render()
 
         document.body.removeEventListener('mousedown', placeArrow )
     }
