@@ -15,7 +15,7 @@ export var init = function() {
     })
 
     socket.on('players_update', function(data){
-        updatePlayers(data.players)
+        updatePlayers(data.players, data.drills)
     })
 
     socket.on('new_turn', function(data){
@@ -27,7 +27,7 @@ export var init = function() {
             }, 1500 * i)
         }
 
-        updatePlayers(data.players)
+        updatePlayers(data.players, data.drills)
 
         eventBus.emit('authorize_fire')
     })

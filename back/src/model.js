@@ -1,10 +1,12 @@
 import {Cube} from '../../common/cube'
+import {randomDrill} from '../../common/drill'
 
 export class BackModel {
     constructor(cube_size) {
         this._sockets_id = []
         this._sockets = []
         this._nicknames = []
+        this._drills = []
 
         this._team_zero = []
         this._team_one = []
@@ -22,6 +24,10 @@ export class BackModel {
         return this._sockets
     }
 
+    getDrills() {
+        return this._drills
+    }
+
     getSerializedCube() {
         return this._cube.serialize()
     }
@@ -30,6 +36,7 @@ export class BackModel {
         var i = this._sockets_id.indexOf(socket.id)
         this._sockets_id.splice(i, 1)
         this._sockets.splice(i, 1)
+        this._drills.splice(i, 1)
         return this._nicknames.splice(i, 1)
     }
 
@@ -37,6 +44,7 @@ export class BackModel {
         this._sockets_id.push(socket.id)
         this._sockets.push(socket)
         this._nicknames.push(nickname)
+        this._drills.push(randomDrill())
         return this._affectTeam(socket)
     }
 
@@ -73,19 +81,23 @@ export class BackModel {
         for ( var i = 0 ; i < this._sockets.length; i++){
             var fire = this._fires[this._sockets[i].id]
             fires_history.push(fire)
-            this._cube.explosion( fire.origin, fire.v, 'd', 1.2 )
+            this._cube.explosion( fire.origin, fire.v, this._drills[i], 1.2 )
             cube_history.push(this._cube.serialize())
         }
 
         //TODO extract gems
 
         console.log("done")
-        // shift initiatives
+        // shift initiatives + miscellanious
         this._sockets_id.push(this._sockets_id.shift())
         this._sockets.push(this._sockets.shift())
         this._nicknames.push(this._nicknames.shift())
+        for(var i =this._drills.length; i-- ;){
+            this._drills[i] = randomDrill()
+        }
 
         this._fires = {}
+        this._countTurn++
         return [fires_history, cube_history]
     }
 

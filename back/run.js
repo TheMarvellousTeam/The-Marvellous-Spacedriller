@@ -13,7 +13,8 @@ io.on('connection', function(socket){
         var nick = model.removePlayer(socket)
         console.log(nick + ' disconnected')
         model.getSockets().forEach(
-            s => s.emit('players_update', {players: model.getNicknames()})
+            s => s.emit('players_update', {players: model.getNicknames(),
+                                           drills: model.getDrills()})
         )
     })
 
@@ -21,14 +22,16 @@ io.on('connection', function(socket){
         var nick = model.removePlayer(socket)
         console.log(nick + ' crashed')
         model.getSockets().forEach(
-            s => s.emit('players_update', {players: model.getNicknames()})
+            s => s.emit('players_update', {players: model.getNicknames(),
+                                           drills: model.getDrills()})
         )
     })
 
     socket.on('ready', function(data) {
         var team = model.addPlayer(socket, data.name)
         model.getSockets().forEach(
-            s => s.emit('players_update', {players: model.getNicknames()})
+            s => s.emit('players_update', {players: model.getNicknames(),
+                                           drills: model.getDrills()})
         )
 
         socket.emit('start', {team: team, cube: model.getSerializedCube()})
@@ -45,7 +48,8 @@ io.on('connection', function(socket){
                 s => s.emit('new_turn', {
                                 fires_history: histories[0],
                                 cube_history: histories[1],
-                                players: model.getNicknames()
+                                players: model.getNicknames(),
+                                drills: model.getDrills()
                             })
             )
             console.log('done')
