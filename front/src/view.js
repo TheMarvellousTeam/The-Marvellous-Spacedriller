@@ -2,7 +2,7 @@ import {initScene} from './renderer/initScene'
 import {CubeRenderer} from './renderer/cube'
 import {arrow} from './renderer/arrow'
 import {proj} from './renderer/utils/proj'
-import {Vector3} from 'three'
+import THREE,{Vector3} from 'three'
 
 
 const ui = ( cube, cubeRenderer, scene, camera ) => {
@@ -14,23 +14,29 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
     range.step      = 1
     range.addEventListener('input', () => cubeRenderer.setDepth( 0|range.value ).render() )
 
+    const placeArrow = () => {
+
+        const x = event.pageX / window.innerWidth
+        const y = event.pageY / window.innerHeight
+
+        const {v, origin} = proj( camera, x, y )
+
+        const O = origin.clone().add( v.setLength( 20 ) )
+
+        scene.add( arrow( origin, O ) )
+
+        console.log( 'place' )
+
+        document.body.removeEventListener('mousedown', placeArrow )
+    }
 
     const fire = document.getElementById( 'fire' )
     fire.addEventListener('click', () => {
 
-        document.body.addEventListener('mousedown', event => {
+
+        document.body.addEventListener('mousedown', placeArrow )
 
 
-            scene.add( arrow( new Vector3( 0,0,0) , new Vector3( 10,0,0) ) )
-            scene.add( arrow( new Vector3( 0,0,0) , new Vector3( 0,10,0) ) )
-            scene.add( arrow( new Vector3( 0,0,0) , new Vector3( 0,0,10) ) )
-
-            const x = event.pageX / window.innerWidth
-            const y = event.pageY / window.innerHeight
-
-            const E = proj( camera, x, y )
-
-        })
 
     })
 
@@ -45,6 +51,8 @@ export const init = ( cube ) => {
     const o = cubeRenderer.getObject()
 
     scene.add( o )
+
+    scene.add( new THREE.AxisHelper( 7 ) )
 
     ui( cube, cubeRenderer, scene, camera )
 }

@@ -44,7 +44,7 @@ export class CubeRenderer {
                 const cell = this._cube.getCell( x, y, z)
                 const c = new THREE.Mesh( geometry, cube_mat( cell ) )
 
-                c.position.set(x-l/2,y-l/2,z-l/2)
+                c.position.set(x-l/2+0.5, y-l/2+0.5, z-l/2+0.5)
                 o.add( c )
 
             }
