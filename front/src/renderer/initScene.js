@@ -71,6 +71,8 @@ export const initScene = () => {
 	let renderer = new THREE.WebGLRenderer( )
 	renderer.setSize( window.innerWidth, window.innerHeight )
     renderer.setClearColor(0x000000, 0)
+    renderer.setPixelRatio(window.devicePixelRatio)
+    renderer.setSize(window.innerWidth, window.innerHeight)
     // renderer.shadowMap.enabled = true
 	// renderer.shadowMap.type = THREE.PCFShadowMap
     // renderer.shadowMapSoft = false;

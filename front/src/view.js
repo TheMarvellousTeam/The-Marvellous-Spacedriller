@@ -8,6 +8,7 @@ import THREE,{Vector3} from 'three'
 import {eventBus} from '../../common/eventBus'
 import {sendFire} from './comm'
 import {minerals} from '../../common/drill'
+import {RocketRenderer} from './renderer/rocket'
 
 
 export var updatePlayers = function(players, drills){
@@ -46,7 +47,7 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
         sendFire(origin, v)
 
         const fire = document.getElementById( 'fire' )
-        fire.removeEventListener('click', attachListener)  
+        fire.removeEventListener('click', attachListener)
         document.body.removeEventListener('mousedown', placeArrow )
     }
 
@@ -70,7 +71,9 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
 export const init = ( cube ) => {
     const {camera, scene, renderer} = initScene()
 
-    const cubeRenderer = (new CubeRenderer()).setCube( cube ).setDepth( cube.getL() )
+    const cubeRenderer = (new CubeRenderer).setCube( cube ).setDepth( cube.getL() )
+
+    const rocketRenderer = (new RocketRenderer).init( scene )
 
     const o = cubeRenderer.getObject()
     scene.add( o )
@@ -79,6 +82,8 @@ export const init = ( cube ) => {
         .then( () => {
 
             cubeRenderer.render()
+
+            rocketRenderer.launch( new Vector3(30,0,0), new Vector3(-30,20,0), 5000 )
 
         })
 
