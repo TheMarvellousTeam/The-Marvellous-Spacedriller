@@ -2,6 +2,7 @@ import {Cube} from '../../common/cube'
 
 export class BackModel {
     constructor(cube_size) {
+        this._sockets_id = []
         this._sockets = []
         this._nicknames = []
 
@@ -26,12 +27,14 @@ export class BackModel {
     }
 
     removePlayer(socket) {
-        var i = this._sockets.indexOf(socket)
+        var i = this._sockets_id.indexOf(socket.id)
+        this._sockets_id.splice(i, 1)
         this._sockets.splice(i, 1)
         return this._nicknames.splice(i, 1)
     }
 
     addPlayer(socket, nickname) {
+        this._sockets_id.push(socket.id)
         this._sockets.push(socket)
         this._nicknames.push(nickname)
         return this._affectTeam(socket)
@@ -48,10 +51,10 @@ export class BackModel {
         }
 
         if ( team == 0)
-            this._team_zero.push(socket)
+            this._team_zero.push(socket.id)
 
         if ( team == 1 )
-            this._team_one.push(socket)
+            this._team_one.push(socket.id)
 
         return team
     }
@@ -76,8 +79,9 @@ export class BackModel {
 
         //TODO extract gems
 
-        // shift initiatives
         console.log("done")
+        // shift initiatives
+        this._sockets_id.push(this._sockets_id.shift())
         this._sockets.push(this._sockets.shift())
         this._nicknames.push(this._nicknames.shift())
 

@@ -19,15 +19,13 @@ export var init = function() {
     })
 
     socket.on('new_turn', function(data){
-        console.log('new turn')
 
         for(var i=0; i<data.cube_history.length; i++){
-            var serial = data.cube_history[i]
+            const serial = data.cube_history[i]
             setTimeout(function(){
                 eventBus.emit('render_cube', serial)  
-            }, 2000 * i)
+            }, 1500 * i)
         }
-
 
         updatePlayers(data.players)
 
