@@ -1,7 +1,7 @@
 import {initScene} from './renderer/initScene'
 import {CubeRenderer} from './renderer/cube'
 import {arrow} from './renderer/arrow'
-import {cube as cube_mat} from './renderer/mat'
+import {gizmo as gizmo_mat, cube as cube_mat} from './renderer/mat'
 import {proj} from './renderer/utils/proj'
 import THREE,{Vector3} from 'three'
 
@@ -28,15 +28,25 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
 
 
 
-        const {t,cell} = cube.explosion( origin, v, 'd', 2 )
+        const {t,cell, p} = cube.explosion( origin, v, 'd', 2 ) || {}
 
-        const geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 )
-        const l = cube.getL()
-        const c = new THREE.Mesh( geometry, cube_mat(  ) )
-        c.position.set(cell.x-l/2+0.5, cell.y-l/2+0.5, cell.z-l/2+0.5)
-        scene.add( c )
+        if ( cell ) {
 
-        cubeRenderer.render()
+            const geometry = new THREE.BoxGeometry( 0.1, 0.1, 0.1 )
+            const l = cube.getL()
+            const c = new THREE.Mesh( geometry, cube_mat(  ) )
+            c.position.set(p.x, p.y, p.z)
+            scene.add( c )
+
+            const geometry2 = new THREE.BoxGeometry( 1, 1, 1 )
+            const h = new THREE.Mesh( geometry2, gizmo_mat(  ) )
+            h.position.set(cell.x-l/2+0.5, cell.y-l/2+0.5, cell.z-l/2+0.5)
+            scene.add( h )
+
+
+            cubeRenderer.render()
+
+        }
 
         document.body.removeEventListener('mousedown', placeArrow )
     }

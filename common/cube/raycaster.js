@@ -27,6 +27,55 @@ const timeToBigSquare = ( o,v,l ) => {
     return i.a < i.b && i.a
 }
 
+const _exit_attr = ( o,v,t ) => {
+
+    if ( v == 0 )
+        return {
+            t : Infinity,
+        }
+
+    const r = ( (o%1) + 1 ) % 1
+
+    return {
+        t : v < 0
+            ? -( r == 0 ? 1 : r )/v
+            : ( 1-r )/v
+        ,
+
+        v : v > 0 ? 1 : -1
+    }
+}
+
+const _raycast = function( cell,o,v,t ) {
+
+    const next = [
+        { attr: 'x', ..._exit_attr( o.x, v.x, t ) },
+        { attr: 'y', ..._exit_attr( o.y, v.y, t ) },
+        { attr: 'z', ..._exit_attr( o.z, v.z, t ) },
+    ]
+
+    const r = next.sort( (a, b) => a.t > b.t ? 1 : -1 )[ 0 ]
+
+    const nextO = {
+        x : o.x + v.x * r.t,
+        y : o.y + v.y * r.t,
+        z : o.z + v.z * r.t,
+    }
+    cell[ r.attr ] += r.v
+
+    if ( !this.isInside( cell.x, cell.y, cell.z ) )
+        return
+
+    if ( this.getCell( cell.x, cell.y, cell.z ) )
+        return {
+            t   : t,
+            p   : nextO,
+            cell
+        }
+
+    return _raycast.call( this, cell, nextO, v, r.t )
+}
+
 export class Cube extends Parent {
 
     rayCast( o, v ){
@@ -46,11 +95,27 @@ export class Cube extends Parent {
 
         const cell = this.contained( p )
 
+        if ( this.getCell( cell.x, cell.y, cell.z) )
 
-        return {
-            cell,
-            p,
-            t
+            return {
+                cell,
+                p,
+                t
+            }
+
+        else {
+
+            const u = {
+                x: o.x + v.x * t,
+                y: o.y + v.y * t,
+                z: o.z + v.z * t,
+            }
+
+            const res = _raycast.call( this, cell, u,v,0 )
+
+            if ( res )
+                return { ...res, t: res.t + t }
+
         }
     }
 
@@ -61,50 +126,6 @@ export class Cube extends Parent {
             y   : this.getL()/2 + Math.floor( p.y ),
             z   : this.getL()/2 + Math.floor( p.z ),
         }
-    }
-
-    blast( p, blastRadius, drillType ){
-
-        const squareRadius = blastRadius * blastRadius
-
-        for ( let x = -blastRadius; x < blastRadius; x ++ )
-        for ( let y = -blastRadius; y < blastRadius; y ++ )
-        for ( let z = -blastRadius; z < blastRadius; z ++ )
-        {
-
-            const d = x*x + y*y + z*z
-
-            if ( d <= squareRadius ) {
-
-                const u = {
-                    x: p.x + x,
-                    y: p.y + y,
-                    z: p.z + z,
-                }
-
-                const cell = this.contained( u )
-
-                const cellType = this.isInside( cell.x, cell.y, cell.z ) && this.getCell( cell.x, cell.y, cell.z )
-
-                if ( cellType == drillType )
-                    this.setCell( cell.x, cell.y, cell.z, null )
-
-            }
-        }
-
-        return this
-    }
-
-    explosion( o, v, drillType, blastRadius ){
-
-        const res = this.rayCast( o, v )
-
-        if ( !res )
-            return
-
-        this.blast( res.p, blastRadius, drillType )
-
-        return res
     }
 
 }

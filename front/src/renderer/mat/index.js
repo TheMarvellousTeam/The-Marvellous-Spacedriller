@@ -15,6 +15,7 @@ export const cube = ( cell ) =>
 
 export const gizmo = () =>
     new THREE.MeshPhongMaterial( {
+        wireframe: true,
         color: 0x33AA33,
         shininess : 12,
         specular: 0xFFFFFF,
