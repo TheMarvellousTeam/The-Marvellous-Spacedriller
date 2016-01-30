@@ -1,16 +1,16 @@
 import {Cube} from '../../common/cube'
 
 export class BackModel {
-    constructor() {
+    constructor(cube_size) {
         this._sockets = []
         this._nicknames = []
 
         this._team_zero = []
         this._team_one = []
 
-        this._fires = []
+        this._fires = {}
 
-        this._cube = (new Cube()).generate(10)
+        this._cube = (new Cube()).generate(cube_size)
     }
 
     getNicknames() {
@@ -56,13 +56,33 @@ export class BackModel {
         return team
     }
 
-    addFire(data) {
-        this._fires.push(data)
-        return this._fires.length == this._sockets.length
+    addFire(socket, data) {
+        this._fires[socket.id] = data
+        return Object.keys(this._fires).length == this._sockets.length
     }
 
     resolveFires() {
-        //TODO
+        var cube_history = []
+        var fires_history = []
+
+        //crash cube
+        console.log("compute explosion...")
+        for ( var i = 0 ; i < this._sockets.length; i++){
+            var fire = this._fires[this._sockets[i].id]
+            fires_history.push(fire)
+            this._cube.explosion( fire.origin, fire.v, 'd', 1.2 )
+            cube_history.push(this._cube.serialize())
+        }
+
+        //TODO extract gems
+
+        // shift initiatives
+        console.log("done")
+        this._sockets.push(this._sockets.shift())
+        this._nicknames.push(this._nicknames.shift())
+
+        this._fires = {}
+        return [fires_history, cube_history]
     }
 
 }

@@ -1,17 +1,12 @@
 import {Cube} from '../../common/cube'
-import {init} from './view'
-import {initComm, sendReady} from './comm'
+import {init as initComm, sendReady} from './comm'
 const io = require('socket.io-client')
-
 
 
 require('file?name=index.html!./app.html')
 
 
 window.onload = () => {
-
-
-    initComm()
 
     var input_name = document.createElement('input')
     input_name.setAttribute('type', 'text')
@@ -22,7 +17,11 @@ window.onload = () => {
     go.setAttribute('type', 'button')
     go.setAttribute('value', 'go')
     go.onclick = function(){
+        initComm()
         sendReady(input_name.value)
+
+        
+
         document.body.removeChild(input_name)
         document.body.removeChild(go)
     }

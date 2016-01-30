@@ -4,7 +4,21 @@ import {arrow} from './renderer/arrow'
 import {gizmo as gizmo_mat, cube as cube_mat} from './renderer/mat'
 import {proj} from './renderer/utils/proj'
 import THREE,{Vector3} from 'three'
+import {eventBus} from '../../common/eventBus'
+import {sendFire} from './comm'
 
+
+export var updatePlayers = function(players){
+    var playDiv = document.getElementById('players')
+    while( playDiv.children.length ){
+        playDiv.removeChild(playDiv.children[0])
+    }
+    for(var i = players.length; i-- ;){
+        var div = document.createElement('div')
+        div.innerHTML = players[i]
+        playDiv.appendChild(div)
+    }
+}
 
 const ui = ( cube, cubeRenderer, scene, camera ) => {
 
@@ -26,9 +40,11 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
 
         scene.add( arrow( origin, O ) )
 
+        // comm
+        sendFire(origin, v)
 
-
-        const {t,cell, p} = cube.explosion( origin, v, 'd', 2 ) || {}
+        /*
+        const {t, cell, p} = cube.explosion( origin, v, 'd', 1.2 ) || {}
 
         if ( cell ) {
 
@@ -47,18 +63,25 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
             cubeRenderer.render()
 
         }
+        */
 
+        const fire = document.getElementById( 'fire' )
+        fire.removeEventListener('click', attachListener)  
         document.body.removeEventListener('mousedown', placeArrow )
     }
 
-    const fire = document.getElementById( 'fire' )
-    fire.addEventListener('click', () => {
-
-
+    var attachListener = function() {
         document.body.addEventListener('mousedown', placeArrow )
+    }
 
+    eventBus.on('authorize_fire', function(){
+        const fire = document.getElementById( 'fire' )
+        fire.addEventListener('click', attachListener)
+    })
 
-
+    eventBus.on('render_cube', function(cubeSerial){
+        cubeRenderer.getCube().hydrate(cubeSerial)
+        cubeRenderer.render()
     })
 
 }

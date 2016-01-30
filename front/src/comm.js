@@ -1,36 +1,37 @@
 import {Cube} from '../../common/cube'
-import {init} from './view'
-import {proj} from './renderer/utils/proj'
+import {init as initView, updatePlayers} from './view'
+import {eventBus} from '../../common/eventBus'
 
 const io = require('socket.io-client')
 
 var socket = null
 
-export var initComm = function() {
+export var init = function() {
     socket = io.connect(location.origin+':1984')
     socket.on('start', function(data){
-
-        const cube = ( new Cube ).hydrate( data.cube )
-
-        init( cube )
-
+        initView( (new Cube()).hydrate(data.cube) )
         document.getElementById('team').innerHTML= "You're in team "+data.team
+        eventBus.emit('authorize_fire')
     })
 
     socket.on('players_update', function(data){
-        var players = document.getElementById('players')
-        while( players.children.length ){
-            players.removeChild(players.children[0])
-        }
-        for(var i=data.players.length; i-- ;){
-            var div = document.createElement('div')
-            div.innerHTML = data.players[i]
-            players.appendChild(div)
-        }
+        updatePlayers(data.players)
     })
 
     socket.on('new_turn', function(data){
-        renderer.getCube().hydrate(data.cube)
+        console.log('new turn')
+
+        for(var i=0; i<data.cube_history.length; i++){
+            var serial = data.cube_history[i]
+            setTimeout(function(){
+                eventBus.emit('render_cube', serial)  
+            }, 2000 * i)
+        }
+
+
+        updatePlayers(data.players)
+
+        eventBus.emit('authorize_fire')
     })
 }
 

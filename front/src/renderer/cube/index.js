@@ -14,6 +14,10 @@ export class CubeRenderer {
         return this
     }
 
+    getCube() {
+        return this._cube
+    }
+
     setDepth( depth ){
 
         this._depthMax = depth
