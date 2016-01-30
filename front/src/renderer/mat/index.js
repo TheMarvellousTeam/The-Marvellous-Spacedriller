@@ -1,8 +1,10 @@
 import THREE from 'three'
 
 const color = {
-    'c': 0xD009D9,
     'a': 0x193209,
+    'b': 0xA029D9,
+    'c': 0xD009D9,
+    'd': 0xA1298B,
 }
 export const cube = ( cell ) =>
     new THREE.MeshPhongMaterial( {

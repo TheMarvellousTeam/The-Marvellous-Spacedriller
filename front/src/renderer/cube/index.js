@@ -3,6 +3,10 @@ import {cube as cube_mat} from '../mat'
 
 export class CubeRenderer {
 
+    constructor(){
+        this._object3D = new THREE.Object3D()
+    }
+
     setCube( cube ) {
 
         this._cube = cube
@@ -10,9 +14,15 @@ export class CubeRenderer {
         return this
     }
 
-    setDepth( ){
+    setDepth( depth ){
+
+        this._depthMax = depth
 
         return this
+    }
+
+    getObject(){
+        return this._object3D
     }
 
     render( ) {
@@ -21,21 +31,26 @@ export class CubeRenderer {
 
         const l = this._cube.getL()
 
-        const o = new THREE.Object3D()
+        const o = this._object3D
+
+        o.remove( ...o.children )
 
         for( let x = l; x--; )
         for( let y = l; y--; )
         for( let z = l; z--; )
         {
+            if ( this._cube.getCellDepth(x, y, z) < this._depthMax ) {
 
-            const cell = this._cube.getCell( x, y, z)
-            const c = new THREE.Mesh( geometry, cube_mat( cell ) )
+                const cell = this._cube.getCell( x, y, z)
+                const c = new THREE.Mesh( geometry, cube_mat( cell ) )
 
-            c.position.set(x-l/2,y-l/2,z-l/2)
-            o.add( c )
+                c.position.set(x-l/2,y-l/2,z-l/2)
+                o.add( c )
+
+            }
         }
 
-        return o
+        return this
     }
 
 }
