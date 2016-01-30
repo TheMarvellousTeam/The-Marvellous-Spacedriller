@@ -18,7 +18,7 @@ export const initScene = () => {
     document.body.appendChild( stats.domElement )
 
     let camera = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 0.01, 2000 )
-	camera.position.set(0, 0 , 16)
+	camera.position.set(0, 0 , 56)
     camera.lookAt( new Vector3(0,0,0) )
     camera.updateProjectionMatrix ()
 

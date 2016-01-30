@@ -28,7 +28,7 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
 
 
 
-        const {t,cell, p} = cube.explosion( origin, v, 'd', 2 ) || {}
+        const {t,cell, p} = cube.explosion( origin, v, 'd', 6 ) || {}
 
         if ( cell ) {
 
