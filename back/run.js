@@ -5,25 +5,37 @@ import {StateMachine} from './src/state'
 
 var io = require('socket.io')(1984)
 
+const MIN_PLAYER = 2
+
 var cube = (new Cube()).generate( 10 )
-var state = new StateMachine()
+var gameState = new StateMachine()
+
 var user_socket = []
 var user_nick = []
 
+var team_zero = []
+var team_one = []
+
 var tmp_team = 0
 
-var startGame = function(){
-    console.log('start game !')
-    state.start()
+var affectTeam = function(socket) {
+    var team = -1
+    if ( team_zero.length < team_one.length ){
+        team = 0
+    } else if ( team_zero.length > team_one.length ) {
+        team = 1
+    } else {
+        team = Math.floor(Math.random()*2)
+    }
 
-    user_socket.forEach((s) => {
-        s.emit( 'start',
-                {
-                    team: tmp_team++%2,
-                    cube: cube.serialize()
-                })
-    })
+    if (team == 0) {
+        team_zero.push(socket)
+    } else if (team == 1) {
+        team_one.push(socket)
+    }
+    return team
 }
+
 
 io.on('connection', function(socket){
 	console.log('user connected')
@@ -33,6 +45,8 @@ io.on('connection', function(socket){
         user_socket.splice(i, 1)
         var nick = user_nick.splice(i, 1)
 
+        user_socket.forEach( s => s.emit('player_quit', {name: nick}) )
+
         console.log(nick + ' disconnected')
     })
 
@@ -40,6 +54,8 @@ io.on('connection', function(socket){
         var i = user_socket.indexOf(socket)
         user_socket.splice(i, 1)
         var nick = user_nick.splice(i, 1)
+
+        user_socket.forEach( s => s.emit('player_quit', {name: nick}) )
 
         console.log(nick + ' crashed')
     })
@@ -54,20 +70,25 @@ io.on('connection', function(socket){
         user_nick.push(data.name)
 
         console.log(data.name + ' is ready')
-        if ( !state.isStarted() && user_socket.length >= 0 ){
-            startGame()
-        } else if ( state.isStarted() ){
-            socket.emit('start',
-                        {
-                            team: tmp_team++%2,
-                            cube: cube.serialize()
-                        })
+
+        if ( gameState.isStarted() ){
+            var team = affectTeam(socket)
+            socket.emit('start', {team: team,
+                                  cube: cube.serialize()})
+        } else if ( user_socket.length >= MIN_PLAYER ){
+            gameState.start()
+            for ( var i = user_socket.length; i-- ;){
+                var team = affectTeam(user_socket[i])
+                user_socket[i].emit('start', {team: team,
+                                              cube: cube.serialize()})
+            }
+
         }
     })
 
     socket.on('fire', function(data){
-        state.newFire()
-        if ( state.isFireOver(user_socket.length) ) {
+        gameState.newFire()
+        if ( gameState.isFireOver(user_socket.length) ) {
             // resolve all fires
             // send new turn
         }

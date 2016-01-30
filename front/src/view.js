@@ -15,7 +15,7 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
     range.step      = 1
     range.addEventListener('input', () => cubeRenderer.setDepth( 0|range.value ).render() )
 
-    const placeArrow = () => {
+    const placeArrow = (event) => {
 
         const x = event.pageX / window.innerWidth
         const y = event.pageY / window.innerHeight
