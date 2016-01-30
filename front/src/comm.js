@@ -38,11 +38,9 @@ export var sendReady = function(nickname){
     socket.emit('ready', {name: nickname})
 }
 
-export var sendFire = function(origin, v, drill, radius) {
+export var sendFire = function(origin, v) {
     socket.emit('fire', {
         origin: origin,
-        v: v,
-        drill: drill,
-        radius: radius
+        v: v
     })
 }
