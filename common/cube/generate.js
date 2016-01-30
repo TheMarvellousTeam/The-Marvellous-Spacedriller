@@ -15,7 +15,7 @@ export class Cube extends Parent {
                 let depth = this.getCellDepth( x,y,z )
                 depth = Math.floor(depth*2/l*minerals.length)
 
-                return minerals[]
+                return minerals[depth]
             })
 
         return this
