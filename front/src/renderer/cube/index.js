@@ -173,7 +173,10 @@ export class CubeRenderer {
 
                 g.computeFaceNormals()
 
-                o.add( new THREE.Mesh( g, cube_mat( cell ) ) )
+                const mesh = new THREE.Mesh( g, cube_mat( cell ) )
+                mesh.receiveShadow = true
+                mesh.castShadow = true
+                o.add( mesh )
             })
 
         return this

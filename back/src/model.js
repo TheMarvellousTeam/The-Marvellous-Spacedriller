@@ -70,7 +70,7 @@ export class BackModel {
         for ( var i = 0 ; i < this._sockets.length; i++){
             var fire = this._fires[this._sockets[i].id]
             fires_history.push(fire)
-            this._cube.explosion( fire.origin, fire.v, 'd', 1.2 )
+            this._cube.explosion( fire.origin, fire.v, 'd', 4 )
             cube_history.push(this._cube.serialize())
         }
 

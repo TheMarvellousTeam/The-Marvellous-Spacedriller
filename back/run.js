@@ -3,7 +3,7 @@ var io = require('socket.io')(1984)
 
 import {BackModel} from './src/model'
 
-var model = new BackModel(45)
+var model = new BackModel(50)
 
 
 io.on('connection', function(socket){

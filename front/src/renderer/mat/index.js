@@ -17,7 +17,7 @@ const tex = {
 export const cube = ( cell ) =>
     new THREE.MeshPhongMaterial( {
         map         : textures[ tex[ cell ] ],
-        shininess   : 12,
+        shininess   : 1,
         specular    : 0xFF00FF,
         // transparent : true,
         // opacity     : 0.5,
