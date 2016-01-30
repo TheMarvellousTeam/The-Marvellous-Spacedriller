@@ -3,7 +3,7 @@ import {Cube as Parent} from './base'
 export class Cube extends Parent {
 
     serialize(){
-        return this._c.join('')
+        return this._cube.join('')
     }
 
     hydrate( c ){
