@@ -10,7 +10,7 @@ export class BackModel {
 
         this._fires = []
 
-        this._cube = (new Cube()).generate(40)
+        this._cube = (new Cube()).generate(30)
     }
 
     getNicknames() {

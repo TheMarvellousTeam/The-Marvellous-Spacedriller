@@ -29,7 +29,7 @@ export class Cube {
         depth = Math.max( Math.abs( y - this._l/2 +0.5), depth )
         depth = Math.max( Math.abs( z - this._l/2 +0.5), depth )
 
-        return 0|depth
+        return Math.ceil( depth )
     }
 
     getL(){
