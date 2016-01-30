@@ -1,5 +1,6 @@
 import {initScene} from './renderer/initScene'
 import {CubeRenderer} from './renderer/cube'
+import {init as initTexture} from './renderer/mat/texture'
 import {arrow} from './renderer/arrow'
 import {gizmo as gizmo_mat, cube as cube_mat} from './renderer/mat'
 import {proj} from './renderer/utils/proj'
@@ -90,13 +91,17 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
 export const init = ( cube ) => {
     const {camera, scene, renderer} = initScene()
 
-    const cubeRenderer = (new CubeRenderer()).setCube( cube ).setDepth( cube.getL() ).render()
+    const cubeRenderer = (new CubeRenderer()).setCube( cube ).setDepth( cube.getL() )
 
     const o = cubeRenderer.getObject()
-
     scene.add( o )
 
-    scene.add( new THREE.AxisHelper( 7 ) )
+    initTexture()
+        .then( () => {
+
+            cubeRenderer.render()
+
+        })
 
     ui( cube, cubeRenderer, scene, camera )
 }
