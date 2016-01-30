@@ -12,3 +12,10 @@ export const cube = ( cell ) =>
         shininess : 12,
         specular: 0xFF00FF,
     })
+
+export const gizmo = () =>
+    new THREE.MeshPhongMaterial( {
+        color: 0x33AA33,
+        shininess : 12,
+        specular: 0xFFFFFF,
+    })

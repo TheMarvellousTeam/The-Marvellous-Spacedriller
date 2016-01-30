@@ -36,7 +36,7 @@ io.on('connection', function(socket){
     socket.on('ready', function() {
         users.push(socket)
         console.log('someone is ready !')
-        if ( nb_users > 2 && users.length == nb_users ){
+        if ( nb_users >= 1 && users.length == nb_users ){
             startGame()
         }
     })
