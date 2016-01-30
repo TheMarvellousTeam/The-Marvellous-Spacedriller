@@ -28,7 +28,7 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
 
 
 
-        const {t,cell} = cube.explosion( origin, v )
+        const {t,cell} = cube.explosion( origin, v, 'd', 2 )
 
         const geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 )
         const l = cube.getL()

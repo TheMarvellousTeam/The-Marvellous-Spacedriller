@@ -1,83 +1,49 @@
-import { Cube as Parent } from './generate'
+import { Cube as Parent } from './raycaster'
 
-const t = ( o,v,l, attr ) => {
-
-    if ( v[attr] == 0 )
-        return {a: -Infinity, b: Infinity}
-
-    const u = ( -l - o[attr] ) / v[ attr ]
-    const k = (  l - o[attr] ) / v[ attr ]
-
-    return {a: Math.min(u,k), b: Math.max(u,k)}
-}
-
-const timeToBigSquare = ( o,v,l ) => {
-    const i = [
-        t( o,v,l, 'x' ),
-        t( o,v,l, 'y' ),
-        t( o,v,l, 'z' ),
-    ]
-        .reduce( (u, i) => ({
-
-            a   : Math.max( u.a, i.a ),
-            b   : Math.min( u.b, i.b ),
-
-        }), {a: -Infinity, b: Infinity})
-
-    return i.a < i.b && i.a
+const closestCorner = ( x,y,z, p ) => {
+    return true
 }
 
 export class Cube extends Parent {
 
-    rayCast( o, v ){
+    blast( p, blastRadius, drillType ){
 
-        const l = this.getL()/2
+        const squareRadius = blastRadius * blastRadius
 
-        const t = timeToBigSquare( o,v,l )
+        for ( let x = -blastRadius; x < blastRadius; x ++ )
+        for ( let y = -blastRadius; y < blastRadius; y ++ )
+        for ( let z = -blastRadius; z < blastRadius; z ++ )
+        {
 
-        if ( !t )
-            return
+            const u = {
+                x: p.x + x,
+                y: p.y + y,
+                z: p.z + z,
+            }
 
-        const p = {
-            x: o.x + v.x * (t+0.01),
-            y: o.y + v.y * (t+0.01),
-            z: o.z + v.z * (t+0.01),
+            const cell = this.contained( u )
+
+            const cellType = this.isInside( cell.x, cell.y, cell.z ) && this.getCell( cell.x, cell.y, cell.z )
+
+            const d = closestCorner( cell.x, cell.y, cell.z )
+
+            if ( cellType == drillType && closestCorner( cell.x, cell.y, cell.z ) < squareRadius )
+
+                    this.setCell( cell.x, cell.y, cell.z, null )
+
         }
 
-        const cell = this.contained( p )
-
-
-        return {
-            cell,
-            t
-        }
+        return this
     }
 
-    contained( p ){
-
-        return {
-            x   : this.getL()/2 + Math.floor( p.x ),
-            y   : this.getL()/2 + Math.floor( p.y ),
-            z   : this.getL()/2 + Math.floor( p.z ),
-        }
-        return {
-            x   : this.getL()/2 -1 + Math.floor( Math.abs( p.x ) ) * ( p.x > 0 ? 1 : -1 ),
-            y   : this.getL()/2 -1 + Math.floor( Math.abs( p.y ) ) * ( p.y > 0 ? 1 : -1 ),
-            z   : this.getL()/2 -1 + Math.floor( Math.abs( p.z ) ) * ( p.z > 0 ? 1 : -1 ),
-        }
-    }
-
-    explosion( o, v ){
+    explosion( o, v, drillType, blastRadius ){
 
         const res = this.rayCast( o, v )
 
         if ( !res )
             return
 
-        const cell = this.getCell( res.cell.x, res.cell.y, res.cell.z )
-
-        if ( cell )
-            this.setCell( res.cell.x, res.cell.y, res.cell.z, null )
+        this.blast( res.p, blastRadius, drillType )
 
         return res
     }

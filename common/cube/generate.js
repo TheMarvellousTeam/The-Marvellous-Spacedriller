@@ -19,6 +19,7 @@ export class Cube extends Parent {
                 depth = Math.min( l/2-1, depth )
                 depth = Math.max( 0, depth )
 
+                return 'd'
                 return strate[ depth ]
             })
 

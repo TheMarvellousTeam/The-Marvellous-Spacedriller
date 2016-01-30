@@ -54,7 +54,7 @@ io.on('connection', function(socket){
         user_nick.push(data.name)
 
         console.log(data.name + ' is ready')
-        if ( !state.isStarted() && user_socket.length >= 2 ){
+        if ( !state.isStarted() && user_socket.length >= 0 ){
             startGame()
         } else if ( state.isStarted() ){
             socket.emit('start',

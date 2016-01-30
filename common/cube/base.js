@@ -17,6 +17,12 @@ export class Cube {
         return this
     }
 
+    isInside( x, y, z ){
+        return x >= 0 && x < this._l
+            && y >= 0 && y < this._l
+            && z >= 0 && z < this._l
+    }
+
     getCellDepth( x, y, z ){
         let depth = 0
         depth = Math.max( Math.abs( x - this._l/2 +0.5 ), depth )
