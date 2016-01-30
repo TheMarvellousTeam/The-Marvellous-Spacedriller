@@ -102,11 +102,13 @@ export class CubeRenderer {
             'c',
             'd',
         ]
-            .forEach( cell =>
+            .forEach( cell => {
 
                 geom[ cell ] = new THREE.Geometry()
 
-            )
+                // geom[ cell ].faceVertexUvs.length = 0
+
+            })
 
         for( let x = l; x--; )
         for( let y = l; y--; )
@@ -118,7 +120,7 @@ export class CubeRenderer {
 
                 if ( cell ){
 
-                    const { vertices, faces } = geom[ cell ]
+                    const { vertices, faces, faceVertexUvs } = geom[ cell ]
 
                     const v = [
                         ...for_direction( this._cube, x, y, z,  l, {x: 1 , y: 0 , z: 0} ),
@@ -134,6 +136,18 @@ export class CubeRenderer {
                         faces.push(
                             new THREE.Face3( i*4 + vertices.length  , i*4 + vertices.length+1, i*4 + vertices.length+2 ),
                             new THREE.Face3( i*4 + vertices.length+3, i*4 + vertices.length  , i*4 + vertices.length+2 )
+                        )
+                        faceVertexUvs[0].push(
+                            [
+                                new THREE.Vector2( 0, 0 ),
+                                new THREE.Vector2( 0, 1 ),
+                                new THREE.Vector2( 1, 1 ),
+                            ],
+                            [
+                                new THREE.Vector2( 1, 0 ),
+                                new THREE.Vector2( 0, 0 ),
+                                new THREE.Vector2( 0, 1 ),
+                            ],
                         )
                     }
 
@@ -159,7 +173,10 @@ export class CubeRenderer {
 
                 g.computeFaceNormals()
 
-                o.add( new THREE.Mesh( g, cube_mat( cell ) ) )
+                const mesh = new THREE.Mesh( g, cube_mat( cell ) )
+                mesh.receiveShadow = true
+                mesh.castShadow = true
+                o.add( mesh )
             })
 
         return this

@@ -1,6 +1,8 @@
 import {Cube} from '../../common/cube'
 import {randomDrill} from '../../common/drill'
 
+const EXPLOSION_RADIUS = 3
+
 export class BackModel {
     constructor(cube_size) {
         this._sockets_id = []
@@ -81,7 +83,7 @@ export class BackModel {
         for ( var i = 0 ; i < this._sockets.length; i++){
             var fire = this._fires[this._sockets[i].id]
             fires_history.push(fire)
-            this._cube.explosion( fire.origin, fire.v, this._drills[i], 1.2 )
+            this._cube.explosion( fire.origin, fire.v, this._drills[i], EXPLOSION_RADIUS )
             cube_history.push(this._cube.serialize())
         }
 

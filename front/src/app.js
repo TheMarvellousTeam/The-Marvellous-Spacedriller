@@ -12,7 +12,7 @@ window.onload = () => {
     input_name.setAttribute('type', 'text')
     input_name.setAttribute('value', 'nickname')
     document.body.appendChild(input_name)
-    
+
     var go = document.createElement('input')
     go.setAttribute('type', 'button')
     go.setAttribute('value', 'go')
@@ -27,5 +27,5 @@ window.onload = () => {
     }
     document.body.appendChild(go)
 
-    
+
 }
