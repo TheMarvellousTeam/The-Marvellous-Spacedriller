@@ -1,6 +1,12 @@
 import { Cube as Parent } from './serialize'
 
-const strate = ['a', 'b', 'c', 'c', 'd']
+const letter = [
+    'a',
+    'b',
+    'c',
+    'd',
+]
+const strate = Array.apply( null, new Array(128) ).map( _ => letter[ 0 | ( Math.random() * 4.99 ) ] )
 
 export class Cube extends Parent {
 
@@ -15,9 +21,9 @@ export class Cube extends Parent {
 
                 let depth = this.getCellDepth( x,y,z )
 
-                depth = depth + (0|( Math.random() * 1.5 ))
-                depth = Math.min( l/2-1, depth )
-                depth = Math.max( 0, depth )
+                // depth = depth + (0|( Math.random() * 1.5 ))
+                // depth = Math.min( l/2-1, depth )
+                // depth = Math.max( 0, depth )
 
                 return 'd'
                 return strate[ depth ]

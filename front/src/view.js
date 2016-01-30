@@ -44,7 +44,7 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
         sendFire(origin, v)
 
         /*
-        const {t, cell, p} = cube.explosion( origin, v, 'd', 1.2 ) || {}
+        const {t, cell, p} = cube.explosion( origin, v, 'd', 6 ) || {}
 
         if ( cell ) {
 
