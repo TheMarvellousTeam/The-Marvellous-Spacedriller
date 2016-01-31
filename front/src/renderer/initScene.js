@@ -50,7 +50,7 @@ export const initScene = () => {
 
 
     let controls = new OrbitControls( camera , renderer.domElement )
-    controls.noZoom = true
+    //controls.noZoom = true
     controls.addEventListener( 'change', () => 0 )
 
     initLight( scene )

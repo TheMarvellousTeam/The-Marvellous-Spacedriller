@@ -145,6 +145,7 @@ export class BackModel {
 
 
         console.log("done")
+
         // shift initiatives + miscellanious
         this._sockets_id.push(this._sockets_id.shift())
         this._sockets.push(this._sockets.shift())
@@ -152,9 +153,7 @@ export class BackModel {
         for(var i =this._drills.length; i-- ;){
             this._drills[i] = randomDrill()
         }
-
         this._fires = {}
-        this._countTurn++
         return [fires_history, cube_history]
     }
 

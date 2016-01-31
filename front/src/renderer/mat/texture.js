@@ -36,6 +36,7 @@ export const init = () =>
 
             ( t ) => {
 
+                /*
                 t.wrapS = THREE.ClampToEdgeWrapping
                 t.wrapT = THREE.ClampToEdgeWrapping
                 t.magFilter = THREE.NearestFilter
@@ -43,6 +44,9 @@ export const init = () =>
                 t.generateMipmaps = false
                 t.needUpdate = true
                 t.repeat = 1
+                */
+                t.wrapS = t.wrapT = THREE.RepeatWrapping
+                t.repeat.set( 1, 1 )
                 textures[ 'soft rock' ] = t
 
                 processing--
