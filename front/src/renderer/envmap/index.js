@@ -1,12 +1,12 @@
 import THREE, {Vector3} from 'three'
 
 const url = [
-    require('file?[hash].[ext]!../../asset/texture/envmap/posx.jpg'),
-    require('file?[hash].[ext]!../../asset/texture/envmap/posx.jpg'),
-    require('file?[hash].[ext]!../../asset/texture/envmap/posx.jpg'),
-    require('file?[hash].[ext]!../../asset/texture/envmap/posx.jpg'),
-    require('file?[hash].[ext]!../../asset/texture/envmap/posx.jpg'),
-    require('file?[hash].[ext]!../../asset/texture/envmap/posx.jpg'),
+    require('file?[hash].[ext]!../../asset/texture/envmap/cubemap1.jpg'),
+    require('file?[hash].[ext]!../../asset/texture/envmap/cubemap2.jpg'),
+    require('file?[hash].[ext]!../../asset/texture/envmap/cubemap3.jpg'),
+    require('file?[hash].[ext]!../../asset/texture/envmap/cubemap5.jpg'),
+    require('file?[hash].[ext]!../../asset/texture/envmap/cubemap4.jpg'),
+    require('file?[hash].[ext]!../../asset/texture/envmap/cubemap6.jpg'),
 ]
 // const url = [
 //     require('file?[hash].[ext]!../../asset/texture/envmap/posx.png'),
