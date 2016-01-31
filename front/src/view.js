@@ -98,11 +98,11 @@ export const init = ( cube, gemBag ) => {
 
     const cubeRenderer = (new CubeRenderer).setCube( cube ).setDepth( cube.getL() ) //.setPhase('solid')
     const gemRenderer = (new GemRenderer).setGemBag( gemBag ).setCube( cube )
-
-    const rocketRenderer = (new RocketRenderer).init( scene )
+    const rocketRenderer = (new RocketRenderer)
 
     scene.add( cubeRenderer.getObject() )
     scene.add( gemRenderer.getObject() )
+    scene.add( rocketRenderer.getObject() )
 
     initTexture()
         .then( () => {
@@ -113,7 +113,7 @@ export const init = ( cube, gemBag ) => {
             gemRenderer.render()
 
             eventBus.on('render_fire', function(data){
-                rocketRenderer.launch(data.start, data.end, data.time, data.color)
+                rocketRenderer.launch(data.start, data.end, data.time, parseInt( data.color.slice(1), 16 ) )
                 setTimeout( function() {
                     if ( data.hit ) playExplosion()
                     cubeRenderer.getCube().hydrate(data.cube)
