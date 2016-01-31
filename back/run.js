@@ -34,7 +34,9 @@ io.on('connection', function(socket){
                                            drills: model.getDrills()})
         )
 
-        socket.emit('start', {team: team, cube: model.getSerializedCube()})
+        socket.emit('start', {team: team,
+                              cube: model.getSerializedCube(),
+                              scores: model.getScores()})
         console.log(data.name + ' is ready')
     })
 
@@ -49,7 +51,8 @@ io.on('connection', function(socket){
                                 fires_history: histories[0],
                                 cube_history: histories[1],
                                 players: model.getNicknames(),
-                                drills: model.getDrills()
+                                drills: model.getDrills(),
+                                scores: model.getScores()
                             })
             )
             console.log('done')

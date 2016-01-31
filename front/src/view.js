@@ -23,6 +23,11 @@ export var updatePlayers = function(players, drills){
     }
 }
 
+export var updateScores = function(scores) {
+    var scoresDiv = document.getElementById('scores')
+    scoresDiv.innerHTML = "team0: "+scores[0]+" | team1: "+scores[1]
+}
+
 const ui = ( cube, cubeRenderer, scene, camera ) => {
 
     const range = document.getElementById( 'range' )
@@ -60,10 +65,6 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
         fire.addEventListener('click', attachListener)
     })
 
-}
-
-var updateCube = function(cube, serial) {
-    cube.hydrate(serial)
 }
 
 export const init = ( cube ) => {

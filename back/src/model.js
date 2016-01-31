@@ -39,6 +39,10 @@ export class BackModel {
         return this._nicknames
     }
 
+    getScores() {
+        return [this._score_zero, this._score_one]
+    }
+
     getSockets() {
         return this._sockets
     }
@@ -98,13 +102,37 @@ export class BackModel {
         //crash cube
         console.log("compute explosion...")
         for ( var i = 0 ; i < this._sockets.length; i++){
-            var fire = this._fires[this._sockets[i].id]
-            const res = this._cube.explosion( fire.origin, fire.v, this._drills[i], EXPLOSION_RADIUS )
+            console.log('pouet')
+            var sid = this._sockets[i].id
+            var fire = this._fires[sid]
+            var res = this._cube.explosion( fire.origin, fire.v, this._drills[i], EXPLOSION_RADIUS )
             if( res ) {
                 fire.end = res.p
-                //TODO check gem extraction
+                // check gems
+                var k = 0
+                while( k < this._gems_zero.length ){
+                    console.log('infinityyyyy')
+                    var gem = this._gems_zero[k]
+                    if( this._cube.getCell(gem.x, gem.y, gem.z) == '' ){
+                        this._gems_zero.slice(k, 1)
+                        //if ( this._team_zero.indexOf(sid) != -1 )
+                        this._score_zero++
+                    } else {
+                        k++
+                    }
+                }
+                k = 0
+                while( k < this._gems_one.length ){
+                    var gem = this._gems_one[k]
+                    if( this._cube.getCell(gem.x, gem.y, gem.z) == '' ){
+                        this._gems_one.slice(k, 0)
+                        //if ( this._team_one.indexOf(sid) != -1 )
+                        this._score_one++
+                    } else {
+                        k++
+                    }
+                }
             } else {
-                //TO CHECK
                 fire.end = {
                     x: fire.origin.x + fire.v.x * 300,
                     y: fire.origin.y + fire.v.y * 300,

@@ -1,5 +1,5 @@
 import {Cube} from '../../common/cube'
-import {init as initView, updatePlayers} from './view'
+import {init as initView, updatePlayers, updateScores} from './view'
 import {eventBus} from '../../common/eventBus'
 
 const io = require('socket.io-client')
@@ -10,7 +10,8 @@ export var init = function() {
     socket = io.connect(location.origin+':1984')
     socket.on('start', function(data){
         initView( (new Cube()).hydrate(data.cube) )
-        document.getElementById('team').innerHTML= "You're in team "+data.team
+        document.getElementById('team').innerHTML= "You're in team"+data.team
+        updateScores(data.scores)
         eventBus.emit('authorize_fire')
     })
 
@@ -36,6 +37,7 @@ export var init = function() {
         }
 
         updatePlayers(data.players, data.drills)
+        updateScores(data.scores)
 
         eventBus.emit('authorize_fire')
     })
