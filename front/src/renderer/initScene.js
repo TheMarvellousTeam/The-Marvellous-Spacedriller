@@ -3,6 +3,7 @@ const OrbitControls = require('three-orbit-controls')(THREE)
 import {default as Stats} from 'stats.js'
 import {init as initEnvMap } from './envmap'
 import {init as initLight } from './light'
+import {cubeSize} from '../../../common/params'
 
 
 const material = new THREE.MeshPhongMaterial( {
@@ -20,21 +21,13 @@ export const initScene = () => {
     document.body.appendChild( stats.domElement )
 
     let camera = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 0.01, 2000 )
-	camera.position.set(0, 0 , 70)
+	camera.position.set(0, 0 , cubeSize*1.4)
     camera.lookAt( new Vector3(0,0,0) )
     camera.updateProjectionMatrix ()
 
 
 	let scene = new THREE.Scene()
 
-    // gizmo
-    // let geometry = new THREE.BoxGeometry( 0.1, 0.1, 0.1 )
-    // let gizmo = new THREE.Mesh( geometry, material )
-    // gizmo.name='gizmo'
-    // scene.add( gizmo )
-    // gizmo.position.set(0,0,0)
-
-	// renderer
 
 	let renderer = new THREE.WebGLRenderer( )
 	renderer.setSize( window.innerWidth, window.innerHeight )
