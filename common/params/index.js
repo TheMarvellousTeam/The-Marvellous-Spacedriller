@@ -1,1 +1,1 @@
-export const cubeSize = 30
+export const cubeSize = 32

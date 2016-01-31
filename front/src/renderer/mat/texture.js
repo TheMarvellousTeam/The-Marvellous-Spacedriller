@@ -46,6 +46,8 @@ export const init = () =>
                 t.repeat = 1
                 */
                 t.wrapS = t.wrapT = THREE.RepeatWrapping
+                t.magFilter = THREE.NearestFilter
+                t.minFilter = THREE.NearestFilter
                 t.repeat.set( 1, 1 )
                 textures[ 'soft rock' ] = t
 

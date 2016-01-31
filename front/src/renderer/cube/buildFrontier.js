@@ -1,5 +1,7 @@
 import THREE, {Vector3} from 'three'
 
+const texture_frag = 4
+
 const for_direction = ( cube, x,y,z,  depthMax, v ) => {
 
     if ( !cube.isInside( x + v.x, y + v.y, z + v.z ) || !cube.getCell( x + v.x, y + v.y, z + v.z ) || cube.getCellDepth( x + v.x, y + v.y, z + v.z ) == depthMax ) {
@@ -93,16 +95,35 @@ export const buildFrontier = ( cube, cellType, depthMax = Infinity ) => {
                         new THREE.Face3( i*4 + vertices.length  , i*4 + vertices.length+1, i*4 + vertices.length+2 ),
                         new THREE.Face3( i*4 + vertices.length+3, i*4 + vertices.length  , i*4 + vertices.length+2 )
                     )
+
+                    // pseudo random var determinist
+                    const s = v
+                        .slice( i*4, (i+1)*4 )
+                        .reduce( (k, p, i) => k
+                            + 17 * (p.z+l/2) * (p.x+l)
+                            + 7 * (p.x+l) * (p.x+l)
+                            + 13 * (p.y+l) + (p.z+l) * (p.z+l)
+                            + 11 * (p.z + l) * (p.y+l)
+                            + 8 * i * ( p.x+l )
+                            , 0 )
+                        .toString().replace('.', '').split('')
+
+                    const k = [ ...s.slice(0,3) , ...s.slice( -3 ) ]
+                        .reduce( ( k, u ) => k+u, 0 )
+                        % (texture_frag * texture_frag )
+
+                    const dx = k % texture_frag
+                    const dy = 0| ( k / texture_frag )
                     faceVertexUvs[0].push(
                         [
-                            new THREE.Vector2( 0, 0 ),
-                            new THREE.Vector2( 0, 1 ),
-                            new THREE.Vector2( 1, 1 ),
+                            new THREE.Vector2( (0+dx)/texture_frag, (0+dy)/texture_frag ),
+                            new THREE.Vector2( (0+dx)/texture_frag, (1+dy)/texture_frag ),
+                            new THREE.Vector2( (1+dx)/texture_frag, (1+dy)/texture_frag ),
                         ],
                         [
-                            new THREE.Vector2( 1, 0 ),
-                            new THREE.Vector2( 0, 0 ),
-                            new THREE.Vector2( 0, 1 ),
+                            new THREE.Vector2( (1+dx)/texture_frag, (0+dy)/texture_frag ),
+                            new THREE.Vector2( (0+dx)/texture_frag, (0+dy)/texture_frag ),
+                            new THREE.Vector2( (1+dx)/texture_frag, (1+dy)/texture_frag ),
                         ],
                     )
                 }

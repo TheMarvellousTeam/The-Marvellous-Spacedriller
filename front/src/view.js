@@ -71,7 +71,7 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
 export const init = ( cube ) => {
     const {camera, scene, renderer} = initScene()
 
-    const cubeRenderer = (new CubeRenderer).setCube( cube ).setDepth( cube.getL() )
+    const cubeRenderer = (new CubeRenderer).setCube( cube ).setDepth( cube.getL() ).setPhase('solid')
 
     const rocketRenderer = (new RocketRenderer).init( scene )
 
@@ -92,7 +92,7 @@ export const init = ( cube ) => {
                     cubeRenderer.render()
                 }, data.time)
             })
-            
+
         })
 
     ui( cube, cubeRenderer, scene, camera )
