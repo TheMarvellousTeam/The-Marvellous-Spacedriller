@@ -15,7 +15,11 @@ export var init = function() {
             bag.add(data.gems[0][i], data.gems[1][i])
         }
         initView( (new Cube()).hydrate(data.cube), bag )
-        document.getElementById('team').innerHTML= "You're in team"+data.team
+        if( data.team ) {
+            document.getElementById('team').innerHTML= "blue team's member"+data.team
+        } else {
+            document.getElementById('team').innerHTML= "red team's member"+data.team
+        }
         updateScores(data.scores)
         eventBus.emit('authorize_fire')
     })

@@ -152,25 +152,32 @@ export class BackModel {
                 fire.hit = true
                 // check gems
                 var k = 0
+                var newList = []
                 while( k < this._gems_zero.length ){
                     var gem = this._gems_zero[k]
-                    if( this._cube.getCell(gem.x, gem.y, gem.z) == '' ){
-                        this._gems_zero.slice(k, 1)
+                    console.log('check: '+this._cube.getCell(gem.x, gem.y, gem.z))
+                    if( !this._cube.getCell(gem.x, gem.y, gem.z) ){
                         this._score_zero++
                     } else {
-                        k++
+                        newList.push(this._gems_zero[k])    
                     }
+                    k++
                 }
+                this._gems_zero = newList
+
                 k = 0
+                newList = []
                 while( k < this._gems_one.length ){
                     var gem = this._gems_one[k]
-                    if( this._cube.getCell(gem.x, gem.y, gem.z) == '' ){
-                        this._gems_one.slice(k, 0)
+                    console.log('check: '+this._cube.getCell(gem.x, gem.y, gem.z))
+                    if( !this._cube.getCell(gem.x, gem.y, gem.z) ){
                         this._score_one++
                     } else {
-                        k++
+                        newList.push(this._gems_one[k])
                     }
+                    k++
                 }
+                this._gems_one = newList
             } else {
                 fire.hit = false
                 fire.end = {

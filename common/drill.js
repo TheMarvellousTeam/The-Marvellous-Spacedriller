@@ -1,5 +1,7 @@
-export var minerals = ['a', 'b', 'c', 'd']
+export const minerals = ['a', 'b', 'c', 'd']
+
+const prob = ['a', 'b', 'b', 'c', 'c', 'c', 'd', 'd', 'd', 'd']
 
 export var randomDrill = function() {
-    return minerals[Math.floor(Math.random()*minerals.length)]
+    return prob[Math.floor(Math.random()*prob.length)]
 }

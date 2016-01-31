@@ -13,27 +13,6 @@ import {RocketRenderer} from './renderer/rocket'
 import {startSoundtrack, playExplosion} from './sound'
 
 
-var hexValToColor = function(val) {
-    switch(val){
-        case 0xFF0000 :
-            return '#ff0000'
-        case 0x00FF00 :
-            return '#00ff00'
-        case 0x0000FF :
-            return '#0000ff'
-        case 0xFFFFFF :
-            return '#ffffff'
-        case 0xFF00D4 :
-            return '#ff00d4'
-        case 0xF2CC0D :
-            return '#f2cc0d'
-        case 0xF2800D :
-            return '#f2800D'
-        case 0x0DF2CC :
-            return '#0df2cc'
-    }
-}
-
 export var updatePlayers = function(players, drills, colors){
     var playDiv = document.getElementById('players')
     while( playDiv.children.length ){
@@ -41,7 +20,7 @@ export var updatePlayers = function(players, drills, colors){
     }
     for(var i = 0; i<players.length; i++){
         var div = document.createElement('div')
-        div.style.color = hexValToColor(colors[i])
+        div.style.color = colors[i]
         div.innerHTML = players[i] + " drill(" + drills[i]+ ")"
         playDiv.appendChild(div)
     }
@@ -49,7 +28,7 @@ export var updatePlayers = function(players, drills, colors){
 
 export var updateScores = function(scores) {
     var scoresDiv = document.getElementById('scores')
-    scoresDiv.innerHTML = "team0: "+scores[0]+" | team1: "+scores[1]
+    scoresDiv.innerHTML = "blue team: "+scores[0]+" | red team: "+scores[1]
 }
 
 const ui = ( cube, cubeRenderer, scene, camera ) => {
