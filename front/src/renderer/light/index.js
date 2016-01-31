@@ -1,4 +1,6 @@
 import THREE, {Vector3} from 'three'
+import {cubeSize} from '../../../../common/params'
+
 
 export const init = ( scene ) => {
 
@@ -35,11 +37,13 @@ export const init = ( scene ) => {
     scene.add( pointLight )
 
 
+    const r = cubeSize* 1.5
+
     let k=0
     const loop = () => {
 
         k ++
-        pointLight.position.set( Math.sin( k * 0.01 ) * Math.sin( k * 0.006 ) * 45,  Math.cos( k * 0.01 ) * 45, Math.cos( k * 0.006 ) * 45 )
+        pointLight.position.set( Math.sin( k * 0.01 ) * Math.sin( k * 0.006 ) * r,  Math.cos( k * 0.01 ) * r, Math.cos( k * 0.006 ) * r )
 
         requestAnimationFrame( loop )
     }

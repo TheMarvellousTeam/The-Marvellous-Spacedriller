@@ -1,4 +1,5 @@
 import THREE, {Vector3} from 'three'
+import {cubeSize} from '../../../../common/params'
 
 const url = [
     require('file?[hash].[ext]!../../asset/texture/envmap/cubemap1.jpg'),
@@ -28,7 +29,7 @@ export const init = ( scene ) =>
 
         cubeMaterial.uniforms[ "tCube" ].value = textureCube
 
-        const cubeMesh = new THREE.Mesh( new THREE.BoxGeometry( 500, 500, 500 ), cubeMaterial )
+        const cubeMesh = new THREE.Mesh( new THREE.BoxGeometry( cubeSize * 100, cubeSize * 100, cubeSize * 100 ), cubeMaterial )
         scene.add( cubeMesh )
 
 

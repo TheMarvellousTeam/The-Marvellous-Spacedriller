@@ -14,14 +14,15 @@ const tex = {
     'c': 'rock',
     'd': 'soft rock',
 }
-export const cube = ( cell ) =>
+export const cube = ( cell, opacity ) =>
     new THREE.MeshPhongMaterial( {
         map         : textures[ tex[ cell ] ],
-        shininess   : 1,
-        specular    : 0xFF00FF,
-        // transparent : true,
-        // opacity     : 0.5,
+        shininess   : 2,
+        specular    : 0xDDCCCFF,
+        transparent : opacity < 1,
+        opacity,
     })
+
 
 export const gizmo = () =>
     new THREE.MeshPhongMaterial( {

@@ -8,9 +8,9 @@ const options = {
     velocityRandomness: .5,
     color: 0xaa88ff,
     colorRandomness: .2,
-    turbulence: .5,
+    turbulence: .2,
     lifetime: 2,
-    size: 5,
+    size: 10,
     sizeRandomness: 1,
     smoothPosition : 1,
 }
@@ -41,9 +41,9 @@ export class RocketRenderer {
         return this._object3D
     }
 
-    launch( A, B, delay ){
+    launch( A, B, delay, color ){
 
-        const pos = (new Vector3).clone( A )
+        const position = (new Vector3).clone( A )
 
         let _cancel
         const start = Date.now()
@@ -54,11 +54,11 @@ export class RocketRenderer {
             const k = ( Date.now() - start )
 
 
-            pos.lerpVectors( A, B, k / delay )
+            position.lerpVectors( A, B, k / delay )
 
             if ( k < delay )
             for ( let k = 100; k--; )
-                this._particleSystem.spawnParticle( {...options, position: pos } )
+                this._particleSystem.spawnParticle( {...options, color, position } )
 
 
             this._particleSystem.update(k / 1000)
