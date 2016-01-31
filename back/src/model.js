@@ -93,6 +93,14 @@ export class BackModel {
         return this._cube.serialize()
     }
 
+    getPlayerReady() {
+        var ready = []
+        for( var i = 0; i<this._sockets_id; i++){
+            ready[i] = this._sockets_id[i] in this._fires
+        }
+        return ready
+    }
+
     removePlayer(socket) {
         var i = this._sockets_id.indexOf(socket.id)
         this._sockets_id.splice(i, 1)

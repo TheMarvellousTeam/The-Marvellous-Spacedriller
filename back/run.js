@@ -16,7 +16,8 @@ io.on('connection', function(socket){
         model.getSockets().forEach(
             s => s.emit('players_update', {players: model.getNicknames(),
                                            colors: model.getColors(),
-                                           drills: model.getDrills()})
+                                           drills: model.getDrills(),
+                                           ready: model.getPlayerReady()})
         )
     })
 
@@ -26,7 +27,8 @@ io.on('connection', function(socket){
         model.getSockets().forEach(
             s => s.emit('players_update', {players: model.getNicknames(),
                                            colors: model.getColors(),
-                                           drills: model.getDrills()})
+                                           drills: model.getDrills(),
+                                           ready: model.getPlayerReady()})
         )
     })
 
@@ -35,7 +37,8 @@ io.on('connection', function(socket){
         model.getSockets().forEach(
             s => s.emit('players_update', {players: model.getNicknames(),
                                            colors: model.getColors(),
-                                           drills: model.getDrills()})
+                                           drills: model.getDrills(),
+                                           ready: model.getPlayerReady()})
         )
 
         socket.emit('start', {team: team,
