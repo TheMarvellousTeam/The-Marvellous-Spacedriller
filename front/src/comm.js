@@ -7,6 +7,9 @@ const io = require('socket.io-client')
 
 var socket = null
 
+const imgUrlA = require('file?[hash].[ext]!./asset/texture/gemA.png')
+const imgUrlB = require('file?[hash].[ext]!./asset/texture/gemB.png')
+
 export var init = function() {
     socket = io.connect(location.origin+':1984')
     socket.on('start', function(data){
@@ -15,11 +18,7 @@ export var init = function() {
             bag.add(data.gems[0][i], data.gems[1][i])
         }
         initView( (new Cube()).hydrate(data.cube), bag )
-        if( data.team ) {
-            document.getElementById('team').innerHTML= "blue team's member"+data.team
-        } else {
-            document.getElementById('team').innerHTML= "red team's member"+data.team
-        }
+        document.getElementById('team').style.backgroundImage = `url(${ data.team == 0 ? imgUrlA : imgUrlB  })`
         updateScores(data.scores)
         eventBus.emit('authorize_fire')
     })

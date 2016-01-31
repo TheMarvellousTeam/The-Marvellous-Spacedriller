@@ -26,9 +26,14 @@ export var updatePlayers = function(players, drills, colors){
     }
 }
 
+const imgUrlA = require('file?[hash].[ext]!./asset/texture/gemA.png')
+const imgUrlB = require('file?[hash].[ext]!./asset/texture/gemB.png')
 export var updateScores = function(scores) {
-    var scoresDiv = document.getElementById('scores')
-    scoresDiv.innerHTML = "blue team: "+scores[0]+" | red team: "+scores[1]
+    document.getElementById('score_A').innerHTML = scores[0]
+    document.getElementById('score_B').innerHTML = scores[1]
+
+    document.getElementById('img_A').style.backgroundImage = `url(${imgUrlA})`
+    document.getElementById('img_B').style.backgroundImage = `url(${imgUrlB})`
 }
 
 const ui = ( cube, cubeRenderer, scene, camera ) => {
@@ -103,4 +108,6 @@ export const init = ( cube, gemBag ) => {
         })
 
     ui( cube, cubeRenderer, scene, camera )
+
+
 }
