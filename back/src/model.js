@@ -31,14 +31,14 @@ export class BackModel {
         this._gems_one = []
         for(var i=0; i<5; i++){
             this._gems_zero.push({
-                x: Math.floor(Math.random()*cube_size),
-                y: Math.floor(Math.random()*cube_size),
-                z: Math.floor(Math.random()*cube_size)
+                x: 1 + Math.floor(Math.random()*(cube_size-1)),
+                y: 1 + Math.floor(Math.random()*(cube_size-1)),
+                z: 1 + Math.floor(Math.random()*(cube_size-1))
             })
             this._gems_one.push({
-                x: Math.floor(Math.random()*cube_size),
-                y: Math.floor(Math.random()*cube_size),
-                z: Math.floor(Math.random()*cube_size)
+                x: 1 + Math.floor(Math.random()*(cube_size-1)),
+                y: 1 + Math.floor(Math.random()*(cube_size-1)),
+                z: 1 + Math.floor(Math.random()*(cube_size-1))
             })
         }
 

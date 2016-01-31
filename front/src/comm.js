@@ -16,9 +16,9 @@ export var init = function() {
         }
         initView( (new Cube()).hydrate(data.cube), bag )
         if( data.team ) {
-            document.getElementById('team').innerHTML= "blue team's member"+data.team
+            document.getElementById('team').innerHTML= "red team's member"
         } else {
-            document.getElementById('team').innerHTML= "red team's member"+data.team
+            document.getElementById('team').innerHTML= "blue team's member"
         }
         updateScores(data.scores)
         eventBus.emit('authorize_fire')

@@ -10,7 +10,7 @@ import {eventBus} from '../../common/eventBus'
 import {sendFire} from './comm'
 import {minerals} from '../../common/drill'
 import {RocketRenderer} from './renderer/rocket'
-import {startSoundtrack, playExplosion} from './sound'
+import {startSoundtrack, playExplosion, playDropbomb} from './sound'
 
 
 export var updatePlayers = function(players, drills, colors){
@@ -92,6 +92,7 @@ export const init = ( cube, gemBag ) => {
             gemRenderer.render()
 
             eventBus.on('render_fire', function(data){
+                playDropbomb()
                 rocketRenderer.launch(data.start, data.end, data.time, parseInt( data.color.slice(1), 16 ) )
                 setTimeout( function() {
                     if ( data.hit ) playExplosion()
