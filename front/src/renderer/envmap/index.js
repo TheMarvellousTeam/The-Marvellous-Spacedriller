@@ -8,14 +8,6 @@ const url = [
     require('file?[hash].[ext]!../../asset/texture/envmap/cubemap4.jpg'),
     require('file?[hash].[ext]!../../asset/texture/envmap/cubemap6.jpg'),
 ]
-// const url = [
-//     require('file?[hash].[ext]!../../asset/texture/envmap/posx.png'),
-//     require('file?[hash].[ext]!../../asset/texture/envmap/negx.png'),
-//     require('file?[hash].[ext]!../../asset/texture/envmap/posy.png'),
-//     require('file?[hash].[ext]!../../asset/texture/envmap/negy.png'),
-//     require('file?[hash].[ext]!../../asset/texture/envmap/posz.png'),
-//     require('file?[hash].[ext]!../../asset/texture/envmap/negz.png'),
-// ]
 
 export const init = ( scene ) =>
     new Promise( resolve => {
