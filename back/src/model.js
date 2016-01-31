@@ -3,14 +3,14 @@ import {randomDrill} from '../../common/drill'
 
 const EXPLOSION_RADIUS = 2.5
 const COLORS = [
-                '#FF0000',  // red
-                '#00FF00',  // green
-                '#0000FF',  // blue
-                '#FFFFFF',  // white
-                '#FF00D4',  // purple
-                '#F2CC0D',  // yellow
-                '#F2800D',  // orange
-                '#0DF2CC'   // cyan
+                0xFF0000,  // red
+                0x00FF00,  // green
+                0x0000FF,  // blue
+                0xFFFFFF,  // white
+                0xFF00D4,  // purple
+                0xF2CC0D,  // yellow
+                0xF2800D,  // orange
+                0x0DF2CC   // cyan
                ]
 var colorsIndex = 0
 

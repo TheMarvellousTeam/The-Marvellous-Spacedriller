@@ -13,6 +13,27 @@ import {RocketRenderer} from './renderer/rocket'
 import {startSoundtrack, playExplosion} from './sound'
 
 
+var hexValToColor = function(val) {
+    switch(val){
+        case 0xFF0000 :
+            return '#ff0000'
+        case 0x00FF00 :
+            return '#00ff00'
+        case 0x0000FF :
+            return '#0000ff'
+        case 0xFFFFFF :
+            return '#ffffff'
+        case 0xFF00D4 :
+            return '#ff00d4'
+        case 0xF2CC0D :
+            return '#f2cc0d'
+        case 0xF2800D :
+            return '#f2800D'
+        case 0x0DF2CC :
+            return '#0df2cc'
+    }
+}
+
 export var updatePlayers = function(players, drills, colors){
     var playDiv = document.getElementById('players')
     while( playDiv.children.length ){
@@ -20,7 +41,7 @@ export var updatePlayers = function(players, drills, colors){
     }
     for(var i = 0; i<players.length; i++){
         var div = document.createElement('div')
-        div.style.color = colors[i]
+        div.style.color = hexValToColor(colors[i])
         div.innerHTML = players[i] + " drill(" + drills[i]+ ")"
         playDiv.appendChild(div)
     }
@@ -49,7 +70,7 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
 
         const O = origin.clone().add( v.clone().setLength( 20 ) )
 
-        scene.add( arrow( origin, O ) ) //test, to trash
+        //scene.add( arrow( origin, O ) ) //test, to trash
 
         // comm
         sendFire(origin, v)
@@ -82,19 +103,6 @@ export const init = ( cube, gemBag ) => {
 
     scene.add( cubeRenderer.getObject() )
     scene.add( gemRenderer.getObject() )
-
-    /*
-    let rad = 0
-    eventBus.on('fire_state', function(){
-        const axis = new THREE.Vector3(0.5,0.5,0)
-        var anim = function(){
-            rad += 5
-            o.rotateOnAxis(axis, rad); 
-            requestAnimationFrame(anim)
-        }
-        requestAnimationFrame(anim)
-    })
-    */
 
     initTexture()
         .then( () => {
