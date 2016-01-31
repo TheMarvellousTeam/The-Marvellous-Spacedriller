@@ -20,8 +20,6 @@ window.onload = () => {
         initComm()
         sendReady(input_name.value)
 
-        
-
         document.body.removeChild(input_name)
         document.body.removeChild(go)
     }
