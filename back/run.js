@@ -57,7 +57,8 @@ io.on('connection', function(socket){
                                 cube_history: histories[1],
                                 players: model.getNicknames(),
                                 drills: model.getDrills(),
-                                scores: model.getScores()
+                                scores: model.getScores(),
+                                colors: model.getColors()
                             })
             )
             console.log('done')

@@ -124,6 +124,7 @@ export class BackModel {
             var sid = this._sockets[i].id
             var fire = this._fires[sid]
             var res = this._cube.explosion( fire.origin, fire.v, this._drills[i], EXPLOSION_RADIUS )
+            fire.color = this._colors[i]
             if( res ) {
                 fire.end = res.p
                 fire.hit = true

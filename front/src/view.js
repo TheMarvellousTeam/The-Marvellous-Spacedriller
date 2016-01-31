@@ -56,7 +56,7 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
         const fire = document.getElementById( 'fire' )
         fire.removeEventListener('click', attachListener)
         document.body.removeEventListener('mousedown', placeArrow )
-        eventBus.emit('search_state')
+        //eventBus.emit('search_state')
     }
 
     var attachListener = function() {
@@ -102,7 +102,7 @@ export const init = ( cube ) => {
             cubeRenderer.render()
 
             eventBus.on('render_fire', function(data){
-                rocketRenderer.launch(data.start, data.end, data.time)
+                rocketRenderer.launch(data.start, data.end, data.time, data.color)
                 setTimeout( function() {
                     if ( data.hit ) playExplosion()
                     cubeRenderer.getCube().hydrate(data.cube)
