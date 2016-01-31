@@ -38,8 +38,10 @@
     "scripts": {
 
         "build-front": "node node_modules/webpack/bin/webpack.js --config ./front/webpack.config.js -d",
+        "postinstall": "node node_modules/webpack/bin/webpack.js --config ./front/webpack.config.js -d",
 
         "dev-front": "node node_modules/webpack/bin/webpack.js --config ./front/webpack.config.js -d -w",
-        "dev-back": "node ./back/_run.js"
+        "dev-back": "node ./back/_run.js",
+        "server": "node ./back/_run.js"
     }
 }
