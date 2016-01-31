@@ -7,7 +7,6 @@ import {cubeSize} from '../common/params'
 
 var model = new BackModel( cubeSize )
 
-
 io.on('connection', function(socket){
 	console.log('new connection')
 
@@ -16,6 +15,7 @@ io.on('connection', function(socket){
         console.log(nick + ' disconnected')
         model.getSockets().forEach(
             s => s.emit('players_update', {players: model.getNicknames(),
+                                           colors: model.getColors(),
                                            drills: model.getDrills()})
         )
     })
@@ -25,6 +25,7 @@ io.on('connection', function(socket){
         console.log(nick + ' crashed')
         model.getSockets().forEach(
             s => s.emit('players_update', {players: model.getNicknames(),
+                                           colors: model.getColors(),
                                            drills: model.getDrills()})
         )
     })
@@ -33,12 +34,14 @@ io.on('connection', function(socket){
         var team = model.addPlayer(socket, data.name)
         model.getSockets().forEach(
             s => s.emit('players_update', {players: model.getNicknames(),
+                                           colors: model.getColors(),
                                            drills: model.getDrills()})
         )
 
         socket.emit('start', {team: team,
                               cube: model.getSerializedCube(),
                               scores: model.getScores()})
+        
         console.log(data.name + ' is ready')
     })
 
@@ -54,7 +57,8 @@ io.on('connection', function(socket){
                                 cube_history: histories[1],
                                 players: model.getNicknames(),
                                 drills: model.getDrills(),
-                                scores: model.getScores()
+                                scores: model.getScores(),
+                                colors: model.getColors()
                             })
             )
             console.log('done')

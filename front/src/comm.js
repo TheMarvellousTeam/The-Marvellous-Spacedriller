@@ -17,25 +17,30 @@ export var init = function() {
     })
 
     socket.on('players_update', function(data){
-        updatePlayers(data.players, data.drills)
+        updatePlayers(data.players, data.drills, data.colors)
     })
 
     socket.on('new_turn', function(data){
         for(var i=0; i<data.cube_history.length; i++){
             const o = data.fires_history[i].origin
             const e = data.fires_history[i].end
+            const hit = data.fires_history[i].hit
             const serial = data.cube_history[i]
+            const color = data.fires_history[i].color
             setTimeout(function(){
+                console.log('emit render_fire')
                 eventBus.emit('render_fire', {
                     start: o,
                     end: e,
                     time: 1500,
-                    cube: serial
+                    cube: serial,
+                    hit: hit,
+                    color: color
                 })
             }, 1500 * i)
         }
 
-        updatePlayers(data.players, data.drills)
+        updatePlayers(data.players, data.drills, data.colors)
         updateScores(data.scores)
 
         eventBus.emit('authorize_fire')

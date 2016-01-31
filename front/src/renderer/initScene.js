@@ -4,6 +4,7 @@ import {default as Stats} from 'stats.js'
 import {init as initEnvMap } from './envmap'
 import {init as initLight } from './light'
 import {cubeSize} from '../../../common/params'
+import {eventBus} from '../../../common/eventBus'
 
 
 const material = new THREE.MeshPhongMaterial( {
@@ -42,8 +43,9 @@ export const initScene = () => {
     document.body.appendChild(renderer.domElement)
 
 
-    let controls = new OrbitControls( camera , renderer.domElement )
-    //controls.noZoom = true
+    const controls = new OrbitControls( camera , renderer.domElement )
+    controls.enableZoom = false
+    controls.enablePan = false
     controls.addEventListener( 'change', () => 0 )
 
     initLight( scene )

@@ -10,16 +10,17 @@ import {eventBus} from '../../common/eventBus'
 import {sendFire} from './comm'
 import {minerals} from '../../common/drill'
 import {RocketRenderer} from './renderer/rocket'
-import {startSoundtrack} from './sound'
+import {startSoundtrack, playExplosion} from './sound'
 
 
-export var updatePlayers = function(players, drills){
+export var updatePlayers = function(players, drills, colors){
     var playDiv = document.getElementById('players')
     while( playDiv.children.length ){
         playDiv.removeChild(playDiv.children[0])
     }
     for(var i = 0; i<players.length; i++){
         var div = document.createElement('div')
+        div.style.color = colors[i]
         div.innerHTML = players[i] + " drill(" + drills[i]+ ")"
         playDiv.appendChild(div)
     }
@@ -56,9 +57,11 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
         const fire = document.getElementById( 'fire' )
         fire.removeEventListener('click', attachListener)
         document.body.removeEventListener('mousedown', placeArrow )
+        //eventBus.emit('search_state')
     }
 
     var attachListener = function() {
+        //eventBus.emit('fire_state')
         document.body.addEventListener('mousedown', placeArrow )
     }
 
@@ -80,6 +83,19 @@ export const init = ( cube, gemBag ) => {
     scene.add( cubeRenderer.getObject() )
     scene.add( gemRenderer.getObject() )
 
+    /*
+    let rad = 0
+    eventBus.on('fire_state', function(){
+        const axis = new THREE.Vector3(0.5,0.5,0)
+        var anim = function(){
+            rad += 5
+            o.rotateOnAxis(axis, rad); 
+            requestAnimationFrame(anim)
+        }
+        requestAnimationFrame(anim)
+    })
+    */
+
     initTexture()
         .then( () => {
 
@@ -89,8 +105,9 @@ export const init = ( cube, gemBag ) => {
             gemRenderer.render()
 
             eventBus.on('render_fire', function(data){
-                rocketRenderer.launch(data.start, data.end, data.time)
+                rocketRenderer.launch(data.start, data.end, data.time, data.color)
                 setTimeout( function() {
+                    if ( data.hit ) playExplosion()
                     cubeRenderer.getCube().hydrate(data.cube)
                     cubeRenderer.render()
                 }, data.time)

@@ -2,6 +2,17 @@ import {Cube} from '../../common/cube'
 import {randomDrill} from '../../common/drill'
 
 const EXPLOSION_RADIUS = 2.5
+const COLORS = [
+                '#FF0000',  // red
+                '#00FF00',  // green
+                '#0000FF',  // blue
+                '#FFFFFF',  // white
+                '#FF00D4',  // purple
+                '#F2CC0D',  // yellow
+                '#F2800D',  // orange
+                '#0DF2CC'   // cyan
+               ]
+var colorsIndex = 0
 
 export class BackModel {
     constructor(cube_size) {
@@ -9,6 +20,7 @@ export class BackModel {
         this._sockets = []
         this._nicknames = []
         this._drills = []
+        this._colors = []
 
         this._team_zero = []
         this._team_one = []
@@ -51,6 +63,10 @@ export class BackModel {
         return this._drills
     }
 
+    getColors() {
+        return this._colors
+    }
+
     getSerializedCube() {
         return this._cube.serialize()
     }
@@ -60,6 +76,7 @@ export class BackModel {
         this._sockets_id.splice(i, 1)
         this._sockets.splice(i, 1)
         this._drills.splice(i, 1)
+        this._colors.splice(i, 1)
         return this._nicknames.splice(i, 1)
     }
 
@@ -68,6 +85,8 @@ export class BackModel {
         this._sockets.push(socket)
         this._nicknames.push(nickname)
         this._drills.push(randomDrill())
+        this._colors.push(COLORS[colorsIndex])
+        colorsIndex = (colorsIndex + 1) % COLORS.length
         return this._affectTeam(socket)
     }
 
@@ -102,20 +121,19 @@ export class BackModel {
         //crash cube
         console.log("compute explosion...")
         for ( var i = 0 ; i < this._sockets.length; i++){
-            console.log('pouet')
             var sid = this._sockets[i].id
             var fire = this._fires[sid]
             var res = this._cube.explosion( fire.origin, fire.v, this._drills[i], EXPLOSION_RADIUS )
+            fire.color = this._colors[i]
             if( res ) {
                 fire.end = res.p
+                fire.hit = true
                 // check gems
                 var k = 0
                 while( k < this._gems_zero.length ){
-                    console.log('infinityyyyy')
                     var gem = this._gems_zero[k]
                     if( this._cube.getCell(gem.x, gem.y, gem.z) == '' ){
                         this._gems_zero.slice(k, 1)
-                        //if ( this._team_zero.indexOf(sid) != -1 )
                         this._score_zero++
                     } else {
                         k++
@@ -126,13 +144,13 @@ export class BackModel {
                     var gem = this._gems_one[k]
                     if( this._cube.getCell(gem.x, gem.y, gem.z) == '' ){
                         this._gems_one.slice(k, 0)
-                        //if ( this._team_one.indexOf(sid) != -1 )
                         this._score_one++
                     } else {
                         k++
                     }
                 }
             } else {
+                fire.hit = false
                 fire.end = {
                     x: fire.origin.x + fire.v.x * 300,
                     y: fire.origin.y + fire.v.y * 300,
@@ -150,6 +168,7 @@ export class BackModel {
         this._sockets_id.push(this._sockets_id.shift())
         this._sockets.push(this._sockets.shift())
         this._nicknames.push(this._nicknames.shift())
+        this._colors.push(this._colors.shift())
         for(var i =this._drills.length; i-- ;){
             this._drills[i] = randomDrill()
         }
