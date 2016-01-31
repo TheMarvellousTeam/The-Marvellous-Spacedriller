@@ -63,8 +63,8 @@ export class RocketRenderer {
 
             this._particleSystem.update(k / 1000)
 
-
-            _cancel = requestAnimationFrame( loop )
+            if ( k < delay + 2000 )
+                _cancel = requestAnimationFrame( loop )
         }
         loop()
 

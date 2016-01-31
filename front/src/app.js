@@ -1,4 +1,3 @@
-import {Cube} from '../../common/cube'
 import {init as initComm, sendReady} from './comm'
 const io = require('socket.io-client')
 

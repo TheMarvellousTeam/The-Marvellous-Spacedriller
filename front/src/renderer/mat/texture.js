@@ -12,16 +12,15 @@ export const init = () =>
         processing++
         loader.load(
 
-            require('file?[hash].[ext]!../../asset/texture/rock.png'),
+            require('file?[hash].[ext]!../../asset/texture/gemA.png'),
 
             ( t ) => {
 
-                t.wrapS = THREE.ClampToEdgeWrapping
-                t.wrapT = THREE.ClampToEdgeWrapping
+                t.wrapS = t.wrapT = THREE.RepeatWrapping
                 t.magFilter = THREE.NearestFilter
                 t.minFilter = THREE.NearestFilter
-                t.repeat = 1
-                textures[ 'rock' ] = t
+                t.repeat.set( 1, 1 )
+                textures[ 'gemA' ] = t
 
                 processing--
                 if ( !processing )
@@ -32,28 +31,50 @@ export const init = () =>
         processing++
         loader.load(
 
-            require('file?[hash].[ext]!../../asset/texture/soft rock.png'),
+            require('file?[hash].[ext]!../../asset/texture/gemB.png'),
 
             ( t ) => {
 
-                /*
-                t.wrapS = THREE.ClampToEdgeWrapping
-                t.wrapT = THREE.ClampToEdgeWrapping
-                t.magFilter = THREE.NearestFilter
-                t.minFilter = THREE.NearestFilter
-                t.generateMipmaps = false
-                t.needUpdate = true
-                t.repeat = 1
-                */
                 t.wrapS = t.wrapT = THREE.RepeatWrapping
                 t.magFilter = THREE.NearestFilter
                 t.minFilter = THREE.NearestFilter
                 t.repeat.set( 1, 1 )
-                textures[ 'soft rock' ] = t
+                textures[ 'gemB' ] = t
 
                 processing--
                 if ( !processing )
                     resolve()
             }
         )
+
+        const cellType = {
+            'a' : require('file?[hash].[ext]!../../asset/texture/core.png'),
+            'b' : require('file?[hash].[ext]!../../asset/texture/amnesite.png'),
+            'c' : require('file?[hash].[ext]!../../asset/texture/soft rock.png'),
+            'd' : require('file?[hash].[ext]!../../asset/texture/rock.png'),
+        }
+
+        Object.keys( cellType )
+            .forEach( c => {
+
+                processing++
+                loader.load(
+
+                    cellType[ c ],
+
+                    ( t ) => {
+
+                        t.wrapS = t.wrapT = THREE.RepeatWrapping
+                        t.magFilter = THREE.NearestFilter
+                        t.minFilter = THREE.NearestFilter
+                        t.repeat.set( 1, 1 )
+                        textures[ c ] = t
+
+                        processing--
+                        if ( !processing )
+                            resolve()
+                    }
+                )
+
+            })
 })

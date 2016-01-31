@@ -1,5 +1,6 @@
 import {initScene} from './renderer/initScene'
 import {CubeRenderer} from './renderer/cube'
+import {GemRenderer} from './renderer/gem'
 import {init as initTexture} from './renderer/mat/texture'
 import {arrow} from './renderer/arrow'
 import {gizmo as gizmo_mat, cube as cube_mat} from './renderer/mat'
@@ -68,15 +69,16 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
 
 }
 
-export const init = ( cube ) => {
+export const init = ( cube, gemBag ) => {
     const {camera, scene, renderer} = initScene()
 
-    const cubeRenderer = (new CubeRenderer).setCube( cube ).setDepth( cube.getL() ).setPhase('solid')
+    const cubeRenderer = (new CubeRenderer).setCube( cube ).setDepth( cube.getL() ) //.setPhase('solid')
+    const gemRenderer = (new GemRenderer).setGemBag( gemBag ).setCube( cube )
 
     const rocketRenderer = (new RocketRenderer).init( scene )
 
-    const o = cubeRenderer.getObject()
-    scene.add( o )
+    scene.add( cubeRenderer.getObject() )
+    scene.add( gemRenderer.getObject() )
 
     initTexture()
         .then( () => {
@@ -84,6 +86,7 @@ export const init = ( cube ) => {
             startSoundtrack()
 
             cubeRenderer.render()
+            gemRenderer.render()
 
             eventBus.on('render_fire', function(data){
                 rocketRenderer.launch(data.start, data.end, data.time)

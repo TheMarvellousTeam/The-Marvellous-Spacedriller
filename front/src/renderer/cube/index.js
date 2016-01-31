@@ -62,11 +62,12 @@ export class CubeRenderer {
 
                 const g = hard[ cell ]
 
-                const mesh = new THREE.Mesh( g, cube_mat( cell, this._phase == 'explorer' ? 0.9 : 1 ) )
+                // const mesh = new THREE.Mesh( g, cube_mat( cell, this._phase == 'explorer' ? 0.9 : 1 ) )
+                const mesh = new THREE.Mesh( g, cube_mat( cell,  1 ) )
                 o.add( mesh )
             })
 
-        ghost && Object.keys( ghost )
+        1 && ghost && Object.keys( ghost )
             .forEach( cell => {
 
                 const g = ghost[ cell ]

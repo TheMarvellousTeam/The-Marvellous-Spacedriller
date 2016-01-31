@@ -1,4 +1,5 @@
 import {Cube} from '../../common/cube'
+import {GemBag} from '../../common/gemBag'
 import {init as initView, updatePlayers, updateScores} from './view'
 import {eventBus} from '../../common/eventBus'
 
@@ -9,7 +10,7 @@ var socket = null
 export var init = function() {
     socket = io.connect(location.origin+':1984')
     socket.on('start', function(data){
-        initView( (new Cube()).hydrate(data.cube) )
+        initView( (new Cube()).hydrate(data.cube), new GemBag )
         document.getElementById('team').innerHTML= "You're in team"+data.team
         updateScores(data.scores)
         eventBus.emit('authorize_fire')

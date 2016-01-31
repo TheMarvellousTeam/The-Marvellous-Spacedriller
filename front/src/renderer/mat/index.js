@@ -2,25 +2,19 @@ import THREE from 'three'
 import {textures} from './texture'
 
 
-const color = {
-    'a': 0x193209,
-    'b': 0xA029D9,
-    'c': 0xD009D9,
-    'd': 0xA1298B,
-}
-const tex = {
-    'a': 'rock',
-    'b': 'rock',
-    'c': 'rock',
-    'd': 'soft rock',
-}
 export const cube = ( cell, opacity ) =>
     new THREE.MeshPhongMaterial( {
-        map         : textures[ tex[ cell ] ],
-        shininess   : 2,
+        map         : textures[ cell ],
+        shininess   : 0.5,
         specular    : 0xDDCCCFF,
         transparent : opacity < 1,
+        depthWrite  : opacity == 1,
         opacity,
+    })
+
+export const gem = ( type ) =>
+    new THREE.SpriteMaterial( {
+        map         : textures[ type ],
     })
 
 
