@@ -46,18 +46,11 @@ export class GemRenderer {
             .forEach( ({type, position}) => {
 
                 const sprite = new THREE.Sprite( mat[ type ] )
-                sprite.scale.x= sprite.scale.y= sprite.scale.z= 0.8
+                sprite.scale.x= sprite.scale.y= sprite.scale.z= 1.6
 
                 sprite.position.set( position.x + 0.5 - l/2, position.y + 0.5 - l/2, position.z + 0.5 - l/2 )
 
                 o.add( sprite )
-
-                // const geometry = new THREE.SphereGeometry( 0.5, 8, 8 )
-            	// const material = new THREE.MeshBasicMaterial( { color: 0x512adc } )
-            	// const sphere = new THREE.Mesh( geometry, material )
-                //
-                // sphere.position.set( position.x + 0.5 - l/2, position.y + 0.5 - l/2, position.z + 0.5 - l/2 )
-                // o.add( sphere )
             })
 
         return this
