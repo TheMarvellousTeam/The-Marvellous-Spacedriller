@@ -3,6 +3,7 @@ import {randomDrill} from '../../common/drill'
 
 const EXPLOSION_RADIUS = 2.5
 const COLORS = [
+    '#25CF48',  // red
     '#3C25CF',  // red
     '#CF2563',  // green
     '#13CF38',  // green
@@ -167,7 +168,7 @@ export class BackModel {
                     if( !this._cube.getCell(gem.x, gem.y, gem.z) ){
                         this._score_zero++
                     } else {
-                        newList.push(this._gems_zero[k])    
+                        newList.push(this._gems_zero[k])
                     }
                     k++
                 }

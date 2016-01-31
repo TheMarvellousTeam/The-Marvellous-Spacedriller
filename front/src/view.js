@@ -12,17 +12,42 @@ import {minerals} from '../../common/drill'
 import {RocketRenderer} from './renderer/rocket'
 import {startSoundtrack, playExplosion, playDropbomb} from './sound'
 
-
-export var updatePlayers = function(players, drills, colors){
+const cellType = {
+    'a' : require('file?[hash].[ext]!./asset/texture/core.png'),
+    'b' : require('file?[hash].[ext]!./asset/texture/amnesite.png'),
+    'c' : require('file?[hash].[ext]!./asset/texture/soft rock.png'),
+    'd' : require('file?[hash].[ext]!./asset/texture/rock.png'),
+}
+export var updatePlayers = function(players, drills, colors, ready){
     var playDiv = document.getElementById('players')
     while( playDiv.children.length ){
         playDiv.removeChild(playDiv.children[0])
     }
+
+
     for(var i = 0; i<players.length; i++){
-        var div = document.createElement('div')
-        div.style.color = colors[i]
-        div.innerHTML = players[i] + " drill(" + drills[i]+ ")"
-        playDiv.appendChild(div)
+        const div = document.createElement('div')
+        div.setAttribute('style', 'display:flex; flex-direction: row; align-items: center; margin-bottom: 5px')
+
+        const pic = document.createElement('div')
+        pic.setAttribute('style', 'border-radius:10px; width:20px; height:20px;background-size:cover;')
+        pic.style.backgroundColor = colors[i]
+
+
+        const label = document.createElement('div')
+        label.setAttribute('style', 'margin-left:10px;width: 160px; text-transform: capitalize;')
+        label.innerHTML = players[ i ]
+
+        const drill = document.createElement('div')
+        drill.setAttribute('style', 'width:40px; height:40px;background-size:cover; image-rendering: pixelated;border:solid 1px #fff')
+        drill.style.backgroundImage = `url(${ cellType[ drills[ i ] ] })`
+        drill.innerHTML = ready[i] ? 'v' : ''
+
+        div.appendChild( pic )
+        div.appendChild( label )
+        div.appendChild( drill )
+
+        playDiv.appendChild( div )
     }
 }
 
