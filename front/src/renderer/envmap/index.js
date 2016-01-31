@@ -29,7 +29,7 @@ export const init = ( scene ) =>
 
         cubeMaterial.uniforms[ "tCube" ].value = textureCube
 
-        const cubeMesh = new THREE.Mesh( new THREE.BoxGeometry( cubeSize * 100, cubeSize * 100, cubeSize * 100 ), cubeMaterial )
+        const cubeMesh = new THREE.Mesh( new THREE.BoxGeometry( cubeSize * 40, cubeSize * 40, cubeSize * 40 ), cubeMaterial )
         scene.add( cubeMesh )
 
 
