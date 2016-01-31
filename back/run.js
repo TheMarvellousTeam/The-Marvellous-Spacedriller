@@ -66,6 +66,13 @@ io.on('connection', function(socket){
                             })
             )
             console.log('done')
+        } else {
+            model.getSockets().forEach(
+                s => s.emit('players_update', {players: model.getNicknames(),
+                                               colors: model.getColors(),
+                                               drills: model.getDrills(),
+                                               ready: model.getPlayerReady()})
+            )
         }
     })
 })
