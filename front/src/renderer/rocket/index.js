@@ -27,21 +27,17 @@ export class RocketRenderer {
         this._object3D = new THREE.Object3D()
     }
 
-    init( scene ){
-
-        this._particleSystem = new THREE.GPUParticleSystem({
-            maxParticles: 25000
-        })
-        scene.add( this._particleSystem )
-
-        return this
-    }
-
     getObject(){
         return this._object3D
     }
 
     launch( A, B, delay, color ){
+
+        const particuleSys = new THREE.GPUParticleSystem({
+            maxParticles: 25000
+        })
+
+        this._object3D.add( particuleSys )
 
         const position = (new Vector3).clone( A )
 
@@ -57,14 +53,17 @@ export class RocketRenderer {
             position.lerpVectors( A, B, k / delay )
 
             if ( k < delay )
-            for ( let k = 100; k--; )
-                this._particleSystem.spawnParticle( {...options, color, position } )
+            for ( let k = 50; k--; )
+                particuleSys.spawnParticle( {...options, color, position } )
 
 
-            this._particleSystem.update(k / 1000)
+            particuleSys.update(k / 1000)
 
-            if ( k < delay + 2000 )
+            if ( k < delay + 3000 )
                 _cancel = requestAnimationFrame( loop )
+
+            else
+                this._object3D.remove( particuleSys )
         }
         loop()
 
