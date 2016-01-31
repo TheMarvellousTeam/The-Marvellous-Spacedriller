@@ -62,16 +62,16 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
         const fire = document.getElementById( 'fire' )
         fire.removeEventListener('click', attachListener)
         document.body.removeEventListener('mousedown', placeArrow )
-        //eventBus.emit('search_state')
+        fire.style.display = 'none';
     }
 
     var attachListener = function() {
-        //eventBus.emit('fire_state')
         document.body.addEventListener('mousedown', placeArrow )
     }
 
     eventBus.on('authorize_fire', function(){
         const fire = document.getElementById( 'fire' )
+        fire.style.display = 'inline-block';
         fire.addEventListener('click', attachListener)
     })
 
