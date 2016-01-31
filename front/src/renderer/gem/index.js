@@ -46,7 +46,7 @@ export class GemRenderer {
             .forEach( ({type, position}) => {
 
                 const sprite = new THREE.Sprite( mat[ type ] )
-                sprite.scale.x= sprite.scale.y= sprite.scale.z= 1.6
+                sprite.scale.x= sprite.scale.y= sprite.scale.z= 1.2
 
                 sprite.position.set( position.x + 0.5 - l/2, position.y + 0.5 - l/2, position.z + 0.5 - l/2 )
 

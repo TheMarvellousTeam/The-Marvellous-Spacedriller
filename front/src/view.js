@@ -41,6 +41,7 @@ export var updatePlayers = function(players, drills, colors, ready){
         const drill = document.createElement('div')
         drill.setAttribute('style', 'width:40px; height:40px;background-size:cover; image-rendering: pixelated;border:solid 1px #fff')
         drill.style.backgroundImage = `url(${ cellType[ drills[ i ] ] })`
+        drill.innerHTML = ready[i] ? 'v' : ''
 
         div.appendChild( pic )
         div.appendChild( label )

@@ -7,22 +7,27 @@ require('file?name=index.html!./app.html')
 
 window.onload = () => {
 
+    var container = document.createElement('div')
+    container.setAttribute('style', 'width:100%; height:100%; display:flex; align-items:center; justify-content: center')
+
     var input_name = document.createElement('input')
     input_name.setAttribute('type', 'text')
     input_name.setAttribute('value', 'nickname')
-    document.body.appendChild(input_name)
+    input_name.setAttribute('style', 'padding:10px; margin: 20px')
+    container.appendChild(input_name)
 
     var go = document.createElement('input')
     go.setAttribute('type', 'button')
     go.setAttribute('value', 'go')
+    go.setAttribute('style', 'padding:10px')
     go.onclick = function(){
         initComm()
         sendReady(input_name.value)
 
-        document.body.removeChild(input_name)
-        document.body.removeChild(go)
+        document.body.removeChild( container )
     }
-    document.body.appendChild(go)
+    container.appendChild(go)
+    document.body.appendChild( container )
 
 
 }
