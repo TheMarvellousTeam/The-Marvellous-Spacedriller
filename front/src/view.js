@@ -47,7 +47,7 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
 
         const O = origin.clone().add( v.clone().setLength( 20 ) )
 
-        scene.add( arrow( origin, O ) )
+        scene.add( arrow( origin, O ) ) //test, to trash
 
         // comm
         sendFire(origin, v)

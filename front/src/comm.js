@@ -20,8 +20,6 @@ export var init = function() {
     })
 
     socket.on('new_turn', function(data){
-        console.log(data.fires_history.length)
-        console.log(data.cube_history.length)
         for(var i=0; i<data.cube_history.length; i++){
             const o = data.fires_history[i].origin
             const e = data.fires_history[i].end
