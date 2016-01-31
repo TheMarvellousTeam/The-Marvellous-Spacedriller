@@ -9,6 +9,7 @@ import {eventBus} from '../../common/eventBus'
 import {sendFire} from './comm'
 import {minerals} from '../../common/drill'
 import {RocketRenderer} from './renderer/rocket'
+import {startSoundtrack} from './sound'
 
 
 export var updatePlayers = function(players, drills){
@@ -79,6 +80,8 @@ export const init = ( cube ) => {
 
     initTexture()
         .then( () => {
+
+            startSoundtrack()
 
             cubeRenderer.render()
 
