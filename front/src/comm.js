@@ -19,11 +19,19 @@ export var init = function() {
     })
 
     socket.on('new_turn', function(data){
-
+        console.log(data.fires_history.length)
+        console.log(data.cube_history.length)
         for(var i=0; i<data.cube_history.length; i++){
+            const o = data.fires_history[i].origin
+            const e = data.fires_history[i].end
             const serial = data.cube_history[i]
             setTimeout(function(){
-                eventBus.emit('render_cube', serial)  
+                eventBus.emit('render_fire', {
+                    start: o,
+                    end: e,
+                    time: 1500,
+                    cube: serial
+                })
             }, 1500 * i)
         }
 

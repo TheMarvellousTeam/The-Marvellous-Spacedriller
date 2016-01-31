@@ -60,13 +60,11 @@ const ui = ( cube, cubeRenderer, scene, camera ) => {
         fire.addEventListener('click', attachListener)
     })
 
-    eventBus.on('render_cube', function(cubeSerial){
-        cubeRenderer.getCube().hydrate(cubeSerial)
-        cubeRenderer.render()
-    })
-
 }
 
+var updateCube = function(cube, serial) {
+    cube.hydrate(serial)
+}
 
 export const init = ( cube ) => {
     const {camera, scene, renderer} = initScene()
@@ -83,8 +81,14 @@ export const init = ( cube ) => {
 
             cubeRenderer.render()
 
-            rocketRenderer.launch( new Vector3(30,0,0), new Vector3(-30,20,0), 5000 )
-
+            eventBus.on('render_fire', function(data){
+                rocketRenderer.launch(data.start, data.end, data.time)
+                setTimeout( function() {
+                    cubeRenderer.getCube().hydrate(data.cube)
+                    cubeRenderer.render()
+                }, data.time)
+            })
+            
         })
 
     ui( cube, cubeRenderer, scene, camera )

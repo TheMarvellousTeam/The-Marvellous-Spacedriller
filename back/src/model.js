@@ -1,7 +1,7 @@
 import {Cube} from '../../common/cube'
 import {randomDrill} from '../../common/drill'
 
-const EXPLOSION_RADIUS = 3
+const EXPLOSION_RADIUS = 2.5
 
 export class BackModel {
     constructor(cube_size) {
@@ -14,6 +14,23 @@ export class BackModel {
         this._team_one = []
 
         this._fires = {}
+        this._gems_zero = []
+        this._gems_one = []
+        for(var i=0; i<10; i++){
+            this._gems_zero = {
+                x: Math.floor(Math.random()*cube_size),
+                y: Math.floor(Math.random()*cube_size),
+                z: Math.floor(Math.random()*cube_size)
+            }
+            this._gems_one = {
+                x: Math.floor(Math.random()*cube_size),
+                y: Math.floor(Math.random()*cube_size),
+                z: Math.floor(Math.random()*cube_size)
+            }
+        }
+
+        this._score_zero = 0
+        this._score_one = 0
 
         this._cube = (new Cube()).generate(cube_size)
     }
@@ -82,12 +99,22 @@ export class BackModel {
         console.log("compute explosion...")
         for ( var i = 0 ; i < this._sockets.length; i++){
             var fire = this._fires[this._sockets[i].id]
+            const res = this._cube.explosion( fire.origin, fire.v, this._drills[i], EXPLOSION_RADIUS )
+            if( res ) {
+                fire.end = res.p
+                //TODO check gem extraction
+            } else {
+                //TO CHECK
+                fire.end = {
+                    x: fire.origin.x + fire.v.x * 300,
+                    y: fire.origin.y + fire.v.y * 300,
+                    z: fire.origin.z + fire.v.z * 300
+                }
+            }
             fires_history.push(fire)
-            this._cube.explosion( fire.origin, fire.v, this._drills[i], EXPLOSION_RADIUS )
             cube_history.push(this._cube.serialize())
         }
 
-        //TODO extract gems
 
         console.log("done")
         // shift initiatives + miscellanious
