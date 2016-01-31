@@ -28,23 +28,44 @@ export class BackModel {
         this._fires = {}
         this._gems_zero = []
         this._gems_one = []
-        for(var i=0; i<10; i++){
-            this._gems_zero = {
+        for(var i=0; i<5; i++){
+            this._gems_zero.push({
                 x: Math.floor(Math.random()*cube_size),
                 y: Math.floor(Math.random()*cube_size),
                 z: Math.floor(Math.random()*cube_size)
-            }
-            this._gems_one = {
+            })
+            this._gems_one.push({
                 x: Math.floor(Math.random()*cube_size),
                 y: Math.floor(Math.random()*cube_size),
                 z: Math.floor(Math.random()*cube_size)
-            }
+            })
         }
 
         this._score_zero = 0
         this._score_one = 0
 
         this._cube = (new Cube()).generate(cube_size)
+    }
+
+    getRandomGem() {
+        var positions = []
+        var gemTypes = []
+        if( Math.random() < 0.5 ) {
+            positions.push(this._gems_zero[Math.floor(Math.random()*this._gems_zero.length)])
+            gemTypes.push('gemA')
+        } else {
+            positions.push(this._gems_one[Math.floor(Math.random()*this._gems_one.length)])
+            gemTypes.push('gemB')
+        }
+
+        if( Math.random() < 0.5 ) {
+            positions.push(this._gems_zero[Math.floor(Math.random()*this._gems_zero.length)])
+            gemTypes.push('gemA')
+        } else {
+            positions.push(this._gems_one[Math.floor(Math.random()*this._gems_one.length)])
+            gemTypes.push('gemB')
+        }
+        return [positions, gemTypes]
     }
 
     getNicknames() {

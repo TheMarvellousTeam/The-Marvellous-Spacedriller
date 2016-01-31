@@ -10,7 +10,11 @@ var socket = null
 export var init = function() {
     socket = io.connect(location.origin+':1984')
     socket.on('start', function(data){
-        initView( (new Cube()).hydrate(data.cube), new GemBag )
+        var bag = new GemBag()
+        for(var i = 0; i<data.gems[0].length; i++){
+            bag.add(data.gems[0][i], data.gems[1][i])
+        }
+        initView( (new Cube()).hydrate(data.cube), bag )
         document.getElementById('team').innerHTML= "You're in team"+data.team
         updateScores(data.scores)
         eventBus.emit('authorize_fire')

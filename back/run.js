@@ -40,7 +40,8 @@ io.on('connection', function(socket){
 
         socket.emit('start', {team: team,
                               cube: model.getSerializedCube(),
-                              scores: model.getScores()})
+                              scores: model.getScores(),
+                              gems: model.getRandomGem()})
         
         console.log(data.name + ' is ready')
     })
